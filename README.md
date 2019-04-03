@@ -1,1 +1,3 @@
-# EE_Intro_Spatial_Workshop
+# Introduction to Spatial Data in R
+
+This repository stores the material developed for the full-day introduction to spatial data in R workshop for the Ecology and Evolution PhD program.
