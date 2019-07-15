@@ -5,3 +5,4 @@ This repository stores the material developed for the full-day introduction to s
 ## References
 
 [Geocomputation with R](https://geocompr.robinlovelace.net/) online book.
+![](https://www.crcpress.com/9781138304512)
