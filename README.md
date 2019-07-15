@@ -2,4 +2,8 @@
 
 This repository stores the material developed for the full-day introduction to spatial data in R workshop for the Ecology and Evolution PhD program.
 
-Test Test Test.
+
+## References
+
+[Geocomputation with R](https://geocompr.robinlovelace.net/) online book.
+![](https://www.crcpress.com/9781138304512)
