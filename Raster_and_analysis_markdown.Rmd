@@ -1,0 +1,323 @@
+---
+title: "Intro to R-GIS 2019 E&E PhD course: Part II and III: rasters and interactions between data"
+author: "Jutta Beher, Roozbeh Valavi and David Wilkinson"
+date: "15/07/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+eval = FALSE
+message = FALSE
+warning = FALSE
+```
+
+** Part two: Rasters and raster analysis
+
+In this part, you learn what a raster is, and how to read, plot and manipulate such data
+
+
+First install the required packages
+
+
+```{r, message = FALSE, warning = FALSE}
+library(rgdal)
+library(raster)
+library(ggplot2)
+library(sf)
+library(maps)
+```
+
+now set the working directory to your own computer
+
+```{r}
+setwd("/Users/juttabeher/Documents/phd_melbourne/workshops/EE_Intro_Spatial_Workshop")
+```
+
+
+
+What is a raster? Nothing more than a matrix!
+The command "raster()" turns any matrix into a raster-object that can be used for
+spatial analysis
+You will now create your own raster:
+Create an empty matrix with the required dimensions
+```{r}
+r <- matrix(0, nrow=3, ncol=3)
+```
+
+Populate each row of the matrix with information (the values of the cells)
+and use the "raster()" command to turn it into a raster object, which you can plot
+```{r}
+r[,1] <- c(1,2,3)  
+r[,2] <- c(5,6,7)
+r[,3] <- c(8:10)
+rr <- raster(r)
+r
+plot(rr)
+```
+As you can see, every cell has a color according to its value.
+You will find out later how to select specific colors.
+
+You can do any maths with a raster!
+```{r}
+plot(rr * 2)
+plot(rr*100)
+plot(rr + rr)
+plot(rr-rr)
+```
+
+You can also use these commands to investigate different aspects of the data
+```{r}
+# you can use these commands to check for specific attributes of the raster:
+res(rr) # returns the cell size dimensions (an x and y value)
+ncol(rr) # the number of columns
+nrow(rr) # the number of rows
+ncell(rr) # the number of cells (rows * columns)
+dim(rr) # the dimensions of the raster (number of columns, number of rows, number of bands)
+crs(rr) # the projection of the raster
+xmin(rr) # the x and y minimum and maximum coordinates
+ymin(rr) 
+xmax(rr) 
+ymax(rr)
+range(values(rr), na.rm=TRUE) # the range of raster values, ignoring NoData
+cellStats(rr, mean) # the mean, min, max, sd, sum
+freq(rr) # for categorical rasters, the frequency of values
+```
+
+Now we use a raster version of the outline of Australia to extract data from the 
+worldclim dataset, and create one layer for mean annual temperature, and mean annual
+rainfall 
+
+The raster command is used to read in single data 
+```{r}
+au <- raster("data/australia.tif")
+
+plot(au) 
+```
+
+However, often you have to read in a lot of files at the same time, for example when working with timeseries such as climate data that often come in files for single months.
+instead of reading in every single file individually, you can create "stacks".
+This is particulalry useful if you intend to combine them, for example by
+calculating the annual mean from 12 monthly means.
+To do so, you can create a list from all files in a directory to read in at once, and then create a "stack" of raster, like a thick sandwich.
+
+
+```{r}
+rasterlist_t <- list.files("data/wc_tavg", pattern = ".tif$", full.names = TRUE)
+t_stack <- stack(rasterlist_t)
+plot(t_stack) # you should see that there are 12 rasters
+```
+
+Now do the same for the rainfall data!
+
+```{r}
+#don't show code 
+rasterlist_p <- list.files("data/wc_prec", pattern = ".tif$", full.names = TRUE)
+p_stack <- stack(rasterlist_p)
+```
+
+Now you can use any command you want ONCE on this big sandwich of rasters 
+instead of having to use it 12 times on the single files.
+The %>% (pipe command) works like that: after the first commmand is executed, 
+the output gets used for the second command.
+That can be tranlated like this: Clipping a raster is a two step process. First, the raster gets cropped to the rectangular extent of the data file used for the clipping (crop function), and then all the cells that have no values in the data file that is used for the clipping are set to NoData (mask function). you can check out if you can see the difference if you don't use the mask command
+
+```{r}
+t_stack_au <- crop(t_stack, au) %>% 
+  mask(au)
+p_stack_au <- crop(p_stack, au) %>% 
+  mask(au)
+plot(p_stack_au)
+```
+
+
+Now you can caluclate the mean from your cropped stack
+```{r}
+# don't show code)
+pmean <- mean(p_stack_au)
+tmean <- mean(t_stack_au)
+```
+
+You can use the plot() command to check how your output looks
+or get a summary by exectuting the name of your new raster
+
+```{r}
+# don't show code
+plot(tmean)
+plot(pmean)
+
+```
+
+Well done, you have mastered single rasters, raster stacks and creating new information from your data!
+You can write your new data to file if you want.
+
+```{r}
+writeRaster(tmean, "tmean.tif", datatype = "GTiff", overwrite = TRUE)
+```
+
+* Challenge 2: creating categories from summarizing and combining data
+
+Now you want to make categories for the temperature and the rainfall to get a better overview of distinct combinations. For this exercise, create 4 categories for temperature: cold, cool,warm, hot
+and 2 for rainfall: dry and wet
+Tip: use the cellStats(x, stats) command to find out the quantiles as boundaries
+for temperature and min,mean,max as boundaries for the rainfall
+How you do it:
+Maybe you can remember how we created our first raster in the beginning - you 
+create such a raster to use for reclassification. It has to show the start and endpoints for your categories (that you found out with CellStats()), as well as the numbers you want to use as category-names
+
+```{r}
+tcat <- matrix(0, nrow=4, ncol=3)
+# populate each row of the matrix with reclassification information for temperature
+tcat[,1] <- c(4,19,22,25) # fill in here the start of the categories 
+tcat[,2] <- c(19,22,25,30) # fill in here the endpoint of the categories
+tcat[,3] <- c(1:4) # fill in here the number for the categories (1-4)
+
+
+pcat <- matrix(0, nrow=2, ncol=3)
+# populate each row of the matrix with reclassification information for precipitation
+pcat[,1] <- c(6,40) 
+pcat[,2] <- c(40,380)
+pcat[,3] <- c(1:2)
+```
+
+Now you can use the matrix for reclassification.
+Reclassification means, that a raster will get overwritten with new values in all cells, based on bins of values. You just created these bins with your matrix. For example, all cells between 4 and 19 degrees will get assigned to category 1 in the new raster.
+```{r}
+tcat_au <- reclassify(tmean, tcat, right=FALSE, overwrite = TRUE)
+# do the same for precipitation
+# don't show code
+pcat_au <- reclassify(pmean, pcat, right=FALSE, overwrite = TRUE)
+
+# check out what you created
+plot(tcat_au)
+plot(pcat_au)
+```
+
+Now you can combine the 2 rasters to get 8 categories for combinations of temperature and rainfall...
+In order to be able to tell them apart, you can multiply one raster by 10 before combining them - what would happen if you just add them up?
+
+```{r}
+
+climate_au <- tcat_au + pcat_au * 10
+
+plot(climate_au)
+
+# you can select colors for your gradients
+# define the list of colour names (see Appendix for colour names)
+colors <- c("white", "yellow", "lightgreen","darkgreen", "lightblue", "blue", "purple","red")
+breaks <- c(11,12,13,14,21,22,23,24,25)
+# plot the raster
+plot(climate_au,breaks = breaks, col=colors)
+
+```
+
+
+
+ INTERACTION:
+Now we want to find out 2 things:
+1) how many koalas are in which temperature zone?
+2) how are the temperature zones distributed across the states?
+To find out, we have to intersect the points and polygons of the vector data with 
+the raster data. This can be done with the command "extract()" from the raster package
+
+```{r}
+
+states <- st_read("data/AU_states.shp")
+as(states, "Spatial")
+plot(states)
+```
+
+
+When we extract data to points, each point will fall within one cell, so we
+don't have to worry about summarizing data
+
+```{r}
+# reading csv file
+koala <- read.csv("data/koala.csv")
+head(koala) # see the first few rows
+# convert to sf
+koala_sf <- st_as_sf(koala, coords = c("Latitude", "Longitude"), crs = 4326)
+koala_sf
+plot(koala_sf)
+crs(koala_sf)  
+crs(climate_au)
+koala_sf_pr <- st_transform(koala_sf, crs(climate_au))
+koala_climate <- extract(climate_au, koala_sf_pr, na.rm=TRUE) 
+
+```
+
+
+Check your results: why do you think there are some NA values?
+
+Extra: You can also extract the raster values to a new column of your koala points,
+do you have an idea how? Remember that you can access columns in spatial data just
+the same as in normal R (data.frames). If it is not an sf object, but for example a
+shapefile, you might have to use FILE-@-DATA-$-COLUMN: The "@" symble tells R to go
+into the attribute table of yourspatial data file.
+
+But if we extract data to polygons, we have potentially a lot of different values 
+within each state, so we have to decide what we want to do with these values
+Note: if your vector data is not an sf-object, you might need to use spTransform instead when reprojecting
+
+```{r}
+crs(states)
+crs(climate_au)
+states_pr <- st_transform(states, crs(climate_au))
+state_climate <- extract(climate_au, states_pr, factors = TRUE, df=TRUE, na.rm=TRUE) 
+```
+Now we want to sum up all cells within each state for each category
+
+```{r}
+class.counts <- as.data.frame(table(state_climate$ID,state_climate$layer))
+```
+
+How does your output look like if you don't use the "as.data.frame" command? Why do you think it is more useful as a data.frame?
+
+
+
+To be able to plot this, we create subsets from each climate category in each state and join our results onto our shapefile as new columns
+```{r}
+clim11 <- subset(class.counts,class.counts$Var2==11)
+clim12 <- subset(class.counts,class.counts$Var2==12)
+clim13 <- subset(class.counts,class.counts$Var2==13)
+clim14 <- subset(class.counts,class.counts$Var2==14)
+clim21 <- subset(class.counts,class.counts$Var2==21)
+clim22 <- subset(class.counts,class.counts$Var2==22)
+clim23 <- subset(class.counts,class.counts$Var2==23)
+clim24 <- subset(class.counts,class.counts$Var2==24)
+
+states$clim11 <- clim11$Freq
+states$clim12 <- clim12$Freq
+states$clim13 <- clim13$Freq
+states$clim14 <- clim14$Freq
+states$clim21 <- clim21$Freq
+states$clim22 <- clim22$Freq
+states$clim23 <- clim23$Freq
+states$clim24 <- clim24$Freq
+
+plot(states, col = states$clim24)
+
+```
+
+
+
+PLOTTING
+You will use the basic R plotting to make a map showing climate categories, country and state outlines and points for koalas observations and then save the map to a png file
+
+Task 1: Make the map
+```{r}
+# plot to set extent
+par(mar = c(2,2,2,2))
+plot(climate_au, main="Koala occurrence in different states and climates")
+# plot with colors for levels of factor (filled / outline)
+plot(climate_au, add=T, legend=F, col=grey(1:80/100)) # create a color ramp of grey colors
+# add the state outlines
+plot(states_pr, add=T, col=NA, border="red")# play with col and border!
+plot(koala_sf_pr, add=T, pch = 20) #,cex is a rough SHOULD WE ADD A COLUMN FOR E.G. male/female to have them add color categories?
+# way to change the size of symbols or text, pch sets the symbol, feel free to play around
+#map.axes(cex.axis=0.8) # here cex specifies font size # only needed if not there yet
+maps::map.scale(120,-40, relwidth = 0.25, metric = TRUE,
+                ratio = FALSE, cex=0.6) # exchange TRUE and FALSE to see what they
+
+```
+
