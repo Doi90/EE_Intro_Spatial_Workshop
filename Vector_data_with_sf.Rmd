@@ -1,5 +1,5 @@
 ---
-title: "Spatial data in R workshop"
+title: "Introduction to Spatial Analysis in R"
 subtitle: "Vector data and simple features"
 author: "Roozbeh Valavi, Jutta Beher and David Wilkinson"
 date: "23/07/2019"
@@ -14,20 +14,43 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
 ```
 
-# Vector data in R
+# Vector data and features
 
-```{r }
+A feature is thought of as a thing, or an object in the real world, such as a building or a tree. As is the case with *objects*, they often consist of other objects. This is the case with features too: **a set of features can form a single feature**. A forest stand can be a feature, a forest can be a feature, a city can be a feature (by Edzer Pebesma).   
+
+```{r echo=FALSE}
+library(sf)
+
+par(bty="l", mfrow=c(2,2))
+
+feature1 <- rbind(c(1, 1.0), c(1.5, 2), c(2, 2), c(2.5, 1.5))
+feature2 <- rbind(c(1, 1.0), c(1.5, 2), c(2, 2), c(2.5, 1.5), c(1, 1.0))
+
+st_multipoint(feature1) %>% 
+  plot(axes = TRUE, ylim = c(0.5, 2), xlim = c(0.5, 3), main = "Points", cex = 0.7, pch = 16, col = "red")
+
+st_linestring(feature1) %>% 
+  plot(axes = TRUE, ylim = c(0.5, 2), xlim = c(0.5, 3), main = "Line")
+st_multipoint(feature1) %>% 
+  plot(add = TRUE, cex = 0.7, pch = 16, col = "red")
+
+st_polygon(list(feature2)) %>% 
+  plot(axes = TRUE, ylim = c(0.5, 2), xlim = c(0.5, 3), main = "Polygon", col = "lightblue")
+st_multipoint(feature1) %>% 
+  plot(add = TRUE, cex = 0.7, pch = 16, col = "red")
 
 ```
 
 
-# Simple features
 
-
-
+# Simple features in R
 
 The definition of **simple features** in [wikipedia](https://en.wikipedia.org/wiki/Simple_Features).   
 
@@ -35,7 +58,9 @@ The definition of **simple features** in [wikipedia](https://en.wikipedia.org/wi
 
 I highly recommed reading [the simple feature web page](https://r-spatial.github.io/sf/articles/sf1.html).
 
-# sf package
+## sf package
+
+Ths `sf` package provides *simple feature access* for R. The `sf` object is a `data.frame` with a *geometry list-column*. It supports different format and spatial references since it is connected to **GDAL** and **PROJ**.
 
 ```{r}
 # install.packages("sf")
@@ -48,11 +73,38 @@ library(sf)
 
 ```
 
-## Coverting to sf
+# Reading and converting data to sf
 
 You can read files directly to sf or convert them from other object types (e.g. `data.frame` or `sp` objects).
 
-Here we want to read **koala.csv** file into R and convert it to `sf` object. This file contains *longitude* and *latitude* columns that we can use to convert to `sf`.
+Now, we can read a polygon map of Australia in **shapefile (.shp)**.
+
+```{r eval=FALSE}
+states <- st_read("data/Australia/Australia_proj.shp")
+states
+
+plot(states)
+
+# plot only the geometry
+plot(st_geometry(states))
+
+```
+
+```{r, echo=FALSE}
+states <- st_read("data/Australia/Australia_proj.shp", quiet = TRUE)
+states
+
+plot(states)
+
+```
+
+```{r}
+# plot only the geometry
+plot(st_geometry(states))
+
+```
+
+Here we want to read **koala.csv** file into R and convert it to `sf` object. This file contains *longitude* and *latitude* columns that we can use to create `sf` object.
 
 ```{r}
 # reading csv file
@@ -62,14 +114,14 @@ head(koala) # see the first few rows
 # convert to sf
 koala_sf <- st_as_sf(koala, coords = c("Longitude", "Latitude"), crs = 4326)
 
-koala_sf
-
 plot(koala_sf)
 
 ```
 
-Now, we can download a polygon map of Australia and plot the koalas to see where they occur in Australia!   
-We can use `rworldmap` package. This packae provides the `SpatialPolygonsDataFrame` object of the world's countries. We can convert it to `sf`. For this purpose we use `dplyr` package and its *piping* functionality to simplify the code!   
+
+## Import data form packages
+
+We can use `rworldmap` package to download the bo9undary map of the world. This packae provides the `SpatialPolygonsDataFrame` object of the world's countries. We can convert it to `sf`. For this purpose we use `dplyr` package and its *piping* functionality to simplify the code!   
 Remember to load `dplyr` or `tidyverse` package.
 
 ```{r message=FALSE, warning=FALSE}
@@ -87,20 +139,75 @@ australia <- wmap %>%
 
 # plot only the geomety of asutalia
 plot(australia$geometry, axes = TRUE)
-# add the koala points on top of it using st_geometry
-plot(st_geometry(koala_sf), col = "blue", add = TRUE)
 
 ```
 
+We can get the cities of Australia from `maps` package.
 
-## Manipulating sf objects
+
+```{r}
+library(maps)
+
+data(world.cities)
+head(world.cities)
+
+cities <- st_as_sf(world.cities, coords = c("long", "lat"), crs = 4326) %>% 
+  filter(country.etc == "Australia")
+
+plot(cities["pop"])
+
+```
+
+Why they are all the same colour?
+
+```{r}
+# filter cities with a population over 1 million
+big_cities <- filter(cities, pop > 1e6)
+
+plot(australia$geometry)
+plot(big_cities["pop"], cex = big_cities$pop / 1e6, lwd = 2, add = TRUE)
+
+```
+
+# Transform coordinate refference system
+
+Now, we want to put the `koala_sf` on top of `states` map to see where koalas occur!  
+
+What happend?!   
+
+Check the coordinate reference of both maps! Are the same?
+
+```{r}
+st_crs(states)
+
+st_crs(koala_sf)
+
+```
+
+Two map layers should have the same spatial reference to be plotted on the correct location relative to each other. For this, we need to change `koala_sf` to be the same as `states`.
+
+Notice, the `crs` argument acsepts the `EPSG` code as well.
+   
+```{r}
+# change the projection
+koala_proj <- st_transform(koala_sf, crs = st_crs(states))
+
+# plot both layers
+plot(st_geometry(states), axes = TRUE)
+plot(koala_proj, col = "blue", add = TRUE)
+
+```
+
+# Geometric operations
 
 
-### Cropping sf
+## Cropping sf
 
 ```{r eval=FALSE}
 library(raster)
 
+# first plot the map
+plot(australia$geometry, axes = TRUE)
 # draw extent manually
 ext <- drawExtent()
 
@@ -121,6 +228,33 @@ plot(australia_clip$geometry, axes = TRUE)
 ```
 
 
+# Spatial join
+
+```{r}
 
 
+
+```
+
+
+
+
+
+# Write spatial data
+
+To write your spatial vector data in your hard disk, you can use `st_write` function.   
+
+Here we write the `koala_proj` data to [`GeoPackage`](https://www.geopackage.org/) format. `GeoPackage` is an OGC standard, and open format for transferring geospatial information. It is platform-independent, portable, and a compact format.
+    
+The old and familiar `shapefile` format has some drawbacks. For instance:
+* It stores in several individual fileds in hard disk
+* Size limitation to 2GB
+* Column names are limited to 12 characters
+   
+
+```{r eval=FALSE}
+
+st_write(koala_proj, "data/koala_projected.gpkg")
+
+```
 
