@@ -19,6 +19,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Vector data in R
 
+```{r }
+
+```
 
 
 # Simple features
@@ -28,7 +31,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The definition of **simple features** in [wikipedia](https://en.wikipedia.org/wiki/Simple_Features).   
 
-![](/Users/rvalavi/Dropbox/MyProjects/Intro_Spatial_Analysis_Workshop/images/simple_features.png)
+![](images/simple_features.png)
 
 I highly recommed reading [the simple feature web page](https://r-spatial.github.io/sf/articles/sf1.html).
 
