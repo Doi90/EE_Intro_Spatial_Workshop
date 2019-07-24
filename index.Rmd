@@ -1,7 +1,7 @@
 ---
 title: "Introduction to Spatial Analysis in R"
 subtitle: "An Ecology and Evolution PhD Program Workshop"
-author: "David Wilkinson"
+author: "Roozbeh Valavi, Jutta Beher, and David Wilkinson"
 date: "`r Sys.Date()`"
 output: bookdown::gitbook
 documentclass: book
