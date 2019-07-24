@@ -1,0 +1,10 @@
+book_filename: "EE_Intro_Spatial_Workshop.Rmd"
+author: "Roozbeh Valavi, Jutta Beher, and David Wilkinson"
+date: "`r Sys.Date()`"
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+repo: https://github.com/Doi90/EE_Intro_Spatial_Workshop
+link-citations: yes
+output_dir: "docs"
+delete_merged_file: true

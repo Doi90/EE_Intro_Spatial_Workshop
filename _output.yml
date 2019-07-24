@@ -1,0 +1,12 @@
+bookdown::gitbook:
+  split_by: chapter
+  config:
+    toc:
+      before: |
+        <li><a href="./">Intro to spatial analysis in R</a></li>
+      after: |
+        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+      collapse: section
+      scroll_highlight: yes
+      search: yes
+    sharing: null

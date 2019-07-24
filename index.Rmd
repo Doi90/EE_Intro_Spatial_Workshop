@@ -1,0 +1,16 @@
+---
+title: "Introduction to Spatial Analysis in R"
+subtitle: "An Ecology and Evolution PhD Program Workshop"
+author: "David Wilkinson"
+date: "`r Sys.Date()`"
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: Doi90/EE_Intro_Spatial_Workshop
+---
+
+# Header fo text on homepage
+
+Put some text here. Just a quick summary of the workshop/materials. Only need a few sentences!
