@@ -59,11 +59,16 @@ The definition of **simple features** in [wikipedia](https://en.wikipedia.org/wi
 
 I highly recommed reading [the simple feature web page](https://r-spatial.github.io/sf/articles/sf1.html).
 
+The structure of the data in R is as follow:
+
+![](images/sf_xfig.png)
+
+
 ## sf package
 
 Ths `sf` package provides *simple feature access* for R. The `sf` object is a `data.frame` with a *geometry list-column*. It supports different format and spatial references since it is connected to **GDAL** and **PROJ**.
 
-```{r}
+```{r message=TRUE, warning=TRUE}
 # install.packages("sf")
 library(sf)
 
@@ -170,7 +175,7 @@ plot(big_cities["pop"], cex = big_cities$pop / 1e6, lwd = 2, add = TRUE)
 
 ```
 
-# Transform coordinate refference system
+# Transform coordinate reference system
 
 Now, we want to put the `koala_sf` on top of `states` map to see where koalas occur!  
 
@@ -198,6 +203,19 @@ plot(st_geometry(states), axes = TRUE)
 plot(koala_proj, col = "blue", add = TRUE)
 
 ```
+
+----------
+
+# Challenge one
+
+Load the `Australia_proj` and `koala` data and plot them on top of each other in `Mercator projection`.
+Note: check the spatial reference of the maps first!
+   
+Directory of the data:   
+`data/Australia/Australia_proj.shp`   
+`data/koala.csv`
+
+----------
 
 # Geometric operations
 
@@ -228,16 +246,73 @@ australia_clip <- st_crop(australia, ext)
 plot(australia_clip$geometry, axes = TRUE)
 ```
 
-
-# Spatial join
+## buffer and join
 
 ```{r}
+buf <- st_buffer(koala_proj, 1e5)
 
+plot(st_geometry(states))
+plot(st_geometry(koala_proj), col = "blue", pch = 16, cex = 0.5, add = TRUE)
+plot(st_geometry(buf), border = "red", add = TRUE)
 
+```
+
+Join the buffers
+
+```{r}
+buf <- st_buffer(koala_proj, 1.5e5) %>% 
+  st_union()
+
+plot(st_geometry(states))
+plot(st_geometry(koala_proj), col = "blue", pch = 16, cex = 0.5, add = TRUE)
+plot(st_geometry(buf), border = "red", add = TRUE)
+
+```
+
+## Spatial join and intersects
+
+```{r}
+koala_states <- st_intersection(koala_proj, states)
+
+table(koala_states$STATENAME)
 
 ```
 
 
+## Nearest distance
+
+Distance to the costline:
+
+```{r}
+# change polygon to line
+aus_line <- st_cast(australia_clip, "MULTILINESTRING")
+
+koala_sf$coastdist <- as.numeric(st_distance(koala_sf, aus_line))
+
+plot(australia_clip$geometry)
+plot(koala_sf["coastdist"], add = TRUE)
+
+```
+
+nearest distance of koalas and it's map colours
+
+```{r}
+koala_dist <- st_distance(koala_proj, koala_proj)
+head(koala_dist)
+
+mindist <- function(x) {
+  mindis <- vector(mode = "numeric", length = nrow(x))
+  for(i in 1:nrow(x)){
+    mindis[i] <- min(x[i, -i])
+  }
+  return(mindis)
+}
+
+koala_proj$ndist <- mindist(koala_dist)
+
+plot(koala_proj["ndist"])
+
+```
 
 
 
@@ -247,10 +322,11 @@ To write your spatial vector data in your hard disk, you can use `st_write` func
 
 Here we write the `koala_proj` data to [`GeoPackage`](https://www.geopackage.org/) format. `GeoPackage` is an OGC standard, and open format for transferring geospatial information. It is platform-independent, portable, and a compact format.
     
-The old and familiar `shapefile` format has some drawbacks. For instance:
-* It stores in several individual fileds in hard disk
-* Size limitation to 2GB
-* Column names are limited to 12 characters
+The old and familiar `shapefile` format has some drawbacks. For instance:   
+
+1. It stores in several individual fileds in hard disk
+2. Size limitation to 2GB
+3. Column names are limited to 12 characters
    
 
 ```{r eval=FALSE}
@@ -259,3 +335,10 @@ st_write(koala_proj, "data/koala_projected.gpkg")
 
 ```
 
+----------
+
+# Challenge two
+
+Load the city maps and calculate the nearest straight distance to the coastline of the cities with 0.5 m population and plot the distance.
+
+----------

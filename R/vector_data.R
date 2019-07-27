@@ -31,3 +31,19 @@ simp_asu <- st_simplify(states)
 plot(simp_asu$geometry)
 
 
+plot(st_geometry(states), axes = TRUE)
+plot(koala_proj, col = "blue", add = TRUE)
+
+buf <- st_buffer(koala_proj, 1.5e5) %>% 
+  st_union()
+
+plot(st_geometry(states))
+plot(st_geometry(koala_proj), col = "blue", pch = 16, cex = 0.5, add = TRUE)
+plot(st_geometry(buf), border = "red", add = TRUE)
+
+
+a <- st_intersects(states, koala_proj) %>% as.matrix()
+class(a)
+a
+
+
