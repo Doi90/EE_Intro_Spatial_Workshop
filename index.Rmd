@@ -11,6 +11,6 @@ link-citations: yes
 github-repo: Doi90/EE_Intro_Spatial_Workshop
 ---
 
-# Header fo text on homepage
+# Home page
 
-Put some text here. Just a quick summary of the workshop/materials. Only need a few sentences!
+This website hosts the course material for the Ecology and Evolution PhD program's *Introduction to Spatial Analysis in R* workshop.

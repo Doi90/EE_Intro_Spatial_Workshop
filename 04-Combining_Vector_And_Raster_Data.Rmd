@@ -64,7 +64,7 @@ hist(koala_climate)
 
 ## Challenge 2: Extract rasters to polygons: how to summarize more complex extractions. 
 
-When you extract data to polygons, like the states of Australia, you havepotentially have a lot of different values within each state, so we have to decide what we want to do with these values
+When you extract data to polygons, like the states of Australia, you potentially have a lot of different values within each state, so we have to decide what we want to do with these values
 
 Note: if your vector data is not an sf-object, you might need to use `spTransform` instead of `st_transform` when reprojecting, because some packages only talk to a specific data format and can't work with others.
 
