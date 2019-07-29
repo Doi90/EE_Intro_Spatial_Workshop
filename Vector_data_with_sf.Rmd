@@ -57,12 +57,14 @@ The definition of **simple features** in [wikipedia](https://en.wikipedia.org/wi
 
 ![](/Users/rvalavi/Dropbox/MyProjects/Intro_Spatial_Analysis_Workshop/images/simple_features.png)
 
-I highly recommed reading [the simple feature web page](https://r-spatial.github.io/sf/articles/sf1.html).
 
 The structure of the data in R is as follow:
 
 ![](images/sf_xfig.png)
 
+    
+I highly recommed reading [the simple feature web page](https://r-spatial.github.io/sf/articles/sf1.html).   
+    
 
 ## sf package
 
@@ -127,8 +129,8 @@ plot(koala_sf)
 
 ## Import data form packages
 
-We can use `rworldmap` package to download the bo9undary map of the world. This packae provides the `SpatialPolygonsDataFrame` object of the world's countries. We can convert it to `sf`. For this purpose we use `dplyr` package and its *piping* functionality to simplify the code!   
-Remember to load `dplyr` or `tidyverse` package.
+We can use **rworldmap** package to download the bo9undary map of the world. This packae provides the `SpatialPolygonsDataFrame` object of the world's countries. We can convert it to `sf`. For this purpose we use **dplyr** package and its *piping* functionality to simplify the code!   
+Remember to load **dplyr** or **tidyverse** package.
 
 ```{r message=FALSE, warning=FALSE}
 library(rworldmap)
@@ -181,7 +183,7 @@ Now, we want to put the `koala_sf` on top of `states` map to see where koalas oc
 
 What happend?!   
 
-Check the coordinate reference of both maps! Are the same?
+Check the coordinate reference of both maps! Are they the same?
 
 ```{r}
 st_crs(states)
@@ -190,12 +192,14 @@ st_crs(koala_sf)
 
 ```
 
-Two map layers should have the same spatial reference to be plotted on the correct location relative to each other. For this, we need to change `koala_sf` to be the same as `states`.
+Two map layers should have the same spatial reference to be plotted on the correct location relative to each other. For this, we need to change `koala_sf` to be the same as `states` or vice versa.
 
-Notice, the `crs` argument acsepts the `EPSG` code as well.
+Notice, the `crs` argument acsepts the [`EPSG`](https://support.esri.com/en/technical-article/000002814) code as well.
    
 ```{r}
 # change the projection
+koala_proj <- st_transform(koala_sf, crs = 3112)
+# or
 koala_proj <- st_transform(koala_sf, crs = st_crs(states))
 
 # plot both layers
@@ -208,7 +212,7 @@ plot(koala_proj, col = "blue", add = TRUE)
 
 # Challenge one
 
-Load the `Australia_proj` and `koala` data and plot them on top of each other in `Mercator projection`.
+Load the **Australia_proj** and **koala** data and plot them on top of each other in **Mercator projection (EPSG: 4326)**.
 Note: check the spatial reference of the maps first!
    
 Directory of the data:   
@@ -221,6 +225,8 @@ Directory of the data:
 
 
 ## Cropping sf
+
+You can clip the **sf** object by another **sf** object or an `extent` object. The `extent` object can come from a layer (`st_bbox` for sf and `extent` for rasters) or we can draw one by `drawExtent` function in the **raster** package. First, you need to plot a map, then use run this function. For drawing the extent you should click on two points in the plotted map.
 
 ```{r eval=FALSE}
 library(raster)
@@ -241,12 +247,18 @@ ext <- c(xmin = 111.1161,
          ymax = -8.494258 )
 ```
 
+Now, you can use this object to clip a vector layer. 
+
 ```{r message=FALSE, warning=FALSE}
 australia_clip <- st_crop(australia, ext)
 plot(australia_clip$geometry, axes = TRUE)
 ```
 
-## buffer and join
+## Buffer and join
+
+In many cases, you need to specify a zone around your map features. We can do this with *buffer* function in GIS and R. In many GIS software, the distance you specify for your buffers is in the unit of the input features (e.g. degree for the *latlong* coordinates and meters for *Lambert* or *UTM*), with an exception of `buffer` function in `raster` package.    
+
+Here we use `koala_proj` object which is in the **Lambert** coordinate system, so the unit is in metres. The `st_buffer` is the function we need here.  
 
 ```{r}
 buf <- st_buffer(koala_proj, 1e5)
@@ -257,7 +269,7 @@ plot(st_geometry(buf), border = "red", add = TRUE)
 
 ```
 
-Join the buffers
+As you see in the plot, for each point in the koala data, a buffer has been created. If the buffer area as a whole is the your purpose and the individual buffers is not important for you, you can use the `st_join` function to merge all the features in your buffer layer.    
 
 ```{r}
 buf <- st_buffer(koala_proj, 1.5e5) %>% 
@@ -269,7 +281,10 @@ plot(st_geometry(buf), border = "red", add = TRUE)
 
 ```
 
-## Spatial join and intersects
+## Spatial join and intersection
+
+Imagine you want to check how many of your koala points fall in each state. This can be done by `st_intersection` function. Notice that `st_intersects` function is a similar function, but *it does not return a spatial object*. With this function, the attribute of the second layer will be joined to the first layer where they have a spatial intersection. This is also called **spatial join** in GIS.   
+
 
 ```{r}
 koala_states <- st_intersection(koala_proj, states)
@@ -278,15 +293,21 @@ table(koala_states$STATENAME)
 
 ```
 
+There are a lot of other geometric operations and handy functions to check the topologic relationship of simple features in **sf** package. To see more examples see [the sf package vignettes](https://cran.r-project.org/web/packages/sf/vignettes/sf3.html).
 
 ## Nearest distance
 
-Distance to the costline:
+Spatial distance is a very important functionality in spatial analysis. Calculating the distance between features is very easy in GIS. Here we want to calculate the distance between the koala points and Australia coastline.    
+
+First, we need to convert the Australia map to line object, then calculate the points to the line. This is because the distance of the points to a polygon that contains them is zero. We can do this by `st_cast` function.    
+
+To calculate the spatial distance of the points to the line, `st_distance` function is used. This function returns a *dense distance matrix* that shows the pairwise distance of every single feature in both datasets. The output object would be in `units` so we can convert it to numeric.
 
 ```{r}
 # change polygon to line
 aus_line <- st_cast(australia_clip, "MULTILINESTRING")
 
+# calculate distance and save it in coastdist column
 koala_sf$coastdist <- as.numeric(st_distance(koala_sf, aus_line))
 
 plot(australia_clip$geometry)
@@ -294,12 +315,17 @@ plot(koala_sf["coastdist"], add = TRUE)
 
 ```
 
-nearest distance of koalas and it's map colours
+Here, the distance matrix is a `[250 x 1]` matrix (250 koala points and 1 line of coastline). In the cases where there are more several features in both layers, you need to calculate the `min` of each row of the output matrix (e.g. with `apply` function).   
+
+When you want to calculate the nearest distance of every feature in the same layer, you need to repeat the same layer in the `st_distance` function twice and then calculate the minimum distance. But here is not that easy! Because the nearest distance of every object in the same layer would be itself *i.e. the min distance for all of the features would be zero*. So, you need to discard the self-distance in the calculating minimum function. You can use the following function to do that. You might be able to find an easier or more efficient way to do that.
 
 ```{r}
 koala_dist <- st_distance(koala_proj, koala_proj)
-head(koala_dist)
+dim(koala_dist) # dimention of the dist matrix
 
+koala_dist[1:5, 1:5]
+
+# function to calculate min distance excluding the self-distance
 mindist <- function(x) {
   mindis <- vector(mode = "numeric", length = nrow(x))
   for(i in 1:nrow(x)){
@@ -308,6 +334,7 @@ mindist <- function(x) {
   return(mindis)
 }
 
+# calculate min distance and save it in ndist column
 koala_proj$ndist <- mindist(koala_dist)
 
 plot(koala_proj["ndist"])
@@ -320,11 +347,11 @@ plot(koala_proj["ndist"])
 
 To write your spatial vector data in your hard disk, you can use `st_write` function.   
 
-Here we write the `koala_proj` data to [`GeoPackage`](https://www.geopackage.org/) format. `GeoPackage` is an OGC standard, and open format for transferring geospatial information. It is platform-independent, portable, and a compact format.
+Here we write the `koala_proj` data to [`GeoPackage`](https://www.geopackage.org/) format. **GeoPackage** is an OGC standard and open format for transferring geospatial information. It is platform-independent, portable, and a compact format.
     
 The old and familiar `shapefile` format has some drawbacks. For instance:   
 
-1. It stores in several individual fileds in hard disk
+1. It stores in several individual files in hard disk
 2. Size limitation to 2GB
 3. Column names are limited to 12 characters
    
@@ -335,10 +362,12 @@ st_write(koala_proj, "data/koala_projected.gpkg")
 
 ```
 
+You can read `.gpkg` format the same way you read `.shp` files (with `st_read` function). **GeoPackage** is supported by **GDAL**, it means you can read and write them in all (updated) GIS software like **QGIS**.
+
 ----------
 
 # Challenge two
 
-Load the city maps and calculate the nearest straight distance to the coastline of the cities with 0.5 m population and plot the distance.
+Load the city maps and calculate the nearest straight distance to the coastline of the cities with 0.5 m population and plot the distance. Then save the output layer in **GeoPackage**.
 
 ----------
