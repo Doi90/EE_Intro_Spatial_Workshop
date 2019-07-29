@@ -25,7 +25,7 @@
 <meta name="author" content="Roozbeh Valavi, Jutta Beher, and David Wilkinson">
 
 
-<meta name="date" content="2019-07-24">
+<meta name="date" content="2019-07-29">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -49,6 +49,69 @@
 
 
 
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 </head>
 
@@ -66,24 +129,58 @@
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Header fo text on homepage</a></li>
-<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
-<li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#header-1"><i class="fa fa-check"></i><b>2.1</b> Header 1</a></li>
-<li class="chapter" data-level="2.2" data-path="introduction.html"><a href="introduction.html#header-2"><i class="fa fa-check"></i><b>2.2</b> Header 2</a></li>
-</ul></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="vector-data.html"><a href="vector-data.html"><i class="fa fa-check"></i><b>3</b> Vector Data</a><ul>
-<li class="chapter" data-level="3.1" data-path="vector-data.html"><a href="vector-data.html#header-1-1"><i class="fa fa-check"></i><b>3.1</b> Header 1</a></li>
-<li class="chapter" data-level="3.2" data-path="vector-data.html"><a href="vector-data.html#header-2-1"><i class="fa fa-check"></i><b>3.2</b> Header 2</a></li>
+<li class="chapter" data-level="3.1" data-path="vector-data.html"><a href="vector-data.html#vector-data-and-features"><i class="fa fa-check"></i><b>3.1</b> Vector data and features</a></li>
+<li class="chapter" data-level="3.2" data-path="vector-data.html"><a href="vector-data.html#simple-features-in-r"><i class="fa fa-check"></i><b>3.2</b> Simple features in <code>R</code></a></li>
+<li class="chapter" data-level="3.3" data-path="vector-data.html"><a href="vector-data.html#sf-package"><i class="fa fa-check"></i><b>3.3</b> sf package</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="vector-data.html"><a href="vector-data.html#reading-and-converting-data-to-sf"><i class="fa fa-check"></i><b>3.3.1</b> Reading and converting data to <code>sf</code></a></li>
+<li class="chapter" data-level="3.3.2" data-path="vector-data.html"><a href="vector-data.html#import-data-from-packages"><i class="fa fa-check"></i><b>3.3.2</b> Import data from packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="vector-data.html"><a href="vector-data.html#transform-coordinate-reference-system"><i class="fa fa-check"></i><b>3.4</b> Transform coordinate reference system</a></li>
+<li class="chapter" data-level="3.5" data-path="vector-data.html"><a href="vector-data.html#challenge-one"><i class="fa fa-check"></i><b>3.5</b> Challenge one</a></li>
+<li class="chapter" data-level="3.6" data-path="vector-data.html"><a href="vector-data.html#geometric-operations"><i class="fa fa-check"></i><b>3.6</b> Geometric operations</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="vector-data.html"><a href="vector-data.html#cropping-sf"><i class="fa fa-check"></i><b>3.6.1</b> Cropping sf</a></li>
+<li class="chapter" data-level="3.6.2" data-path="vector-data.html"><a href="vector-data.html#buffer-and-join"><i class="fa fa-check"></i><b>3.6.2</b> Buffer and join</a></li>
+<li class="chapter" data-level="3.6.3" data-path="vector-data.html"><a href="vector-data.html#spatial-join-and-intersection"><i class="fa fa-check"></i><b>3.6.3</b> Spatial join and intersection</a></li>
+<li class="chapter" data-level="3.6.4" data-path="vector-data.html"><a href="vector-data.html#nearest-distance"><i class="fa fa-check"></i><b>3.6.4</b> Nearest distance</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="vector-data.html"><a href="vector-data.html#write-spatial-data"><i class="fa fa-check"></i><b>3.7</b> Write spatial data</a></li>
+<li class="chapter" data-level="3.8" data-path="vector-data.html"><a href="vector-data.html#challenge-two"><i class="fa fa-check"></i><b>3.8</b> Challenge two</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="raster-data.html"><a href="raster-data.html"><i class="fa fa-check"></i><b>4</b> Raster Data</a><ul>
-<li class="chapter" data-level="4.1" data-path="raster-data.html"><a href="raster-data.html#header-1-2"><i class="fa fa-check"></i><b>4.1</b> Header 1</a></li>
-<li class="chapter" data-level="4.2" data-path="raster-data.html"><a href="raster-data.html#header-2-2"><i class="fa fa-check"></i><b>4.2</b> Header 2</a></li>
+<li class="chapter" data-level="4.1" data-path="raster-data.html"><a href="raster-data.html#rasters-and-raster-analysis"><i class="fa fa-check"></i><b>4.1</b> Rasters and raster analysis</a></li>
+<li class="chapter" data-level="4.2" data-path="raster-data.html"><a href="raster-data.html#understanding-what-a-raster-is"><i class="fa fa-check"></i><b>4.2</b> Understanding what a raster is</a></li>
+<li class="chapter" data-level="4.3" data-path="raster-data.html"><a href="raster-data.html#you-can-do-any-maths-with-a-raster"><i class="fa fa-check"></i><b>4.3</b> You can do any maths with a raster!</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="raster-data.html"><a href="raster-data.html#optional-task"><i class="fa fa-check"></i><b>4.3.1</b> Optional task:</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="raster-data.html"><a href="raster-data.html#investigate-rasters"><i class="fa fa-check"></i><b>4.4</b> Investigate rasters</a></li>
+<li class="chapter" data-level="4.5" data-path="raster-data.html"><a href="raster-data.html#reading-a-raster-into-r"><i class="fa fa-check"></i><b>4.5</b> Reading a raster into R</a></li>
+<li class="chapter" data-level="4.6" data-path="raster-data.html"><a href="raster-data.html#reading-a-list-of-rasters-into-r"><i class="fa fa-check"></i><b>4.6</b> Reading a list of rasters into R</a></li>
+<li class="chapter" data-level="4.7" data-path="raster-data.html"><a href="raster-data.html#challenge-one-operations-on-raster-stacks"><i class="fa fa-check"></i><b>4.7</b> Challenge One: Operations on raster stacks</a></li>
+<li class="chapter" data-level="4.8" data-path="raster-data.html"><a href="raster-data.html#writing-new-rasters-to-file"><i class="fa fa-check"></i><b>4.8</b> Writing new rasters to file</a></li>
+<li class="chapter" data-level="4.9" data-path="raster-data.html"><a href="raster-data.html#challenge-2-creating-categories-from-summarizing-and-combining-data"><i class="fa fa-check"></i><b>4.9</b> Challenge 2: Creating categories from summarizing and combining data</a></li>
+<li class="chapter" data-level="4.10" data-path="raster-data.html"><a href="raster-data.html#preparation-for-the-reclassification-into-categories"><i class="fa fa-check"></i><b>4.10</b> Preparation for the reclassification into categories:</a></li>
+<li class="chapter" data-level="4.11" data-path="raster-data.html"><a href="raster-data.html#reclassification"><i class="fa fa-check"></i><b>4.11</b> Reclassification</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="combining-vector-and-raster-data.html"><a href="combining-vector-and-raster-data.html"><i class="fa fa-check"></i><b>5</b> Combining Vector and Raster Data</a><ul>
-<li class="chapter" data-level="5.1" data-path="combining-vector-and-raster-data.html"><a href="combining-vector-and-raster-data.html#header-1-3"><i class="fa fa-check"></i><b>5.1</b> Header 1</a></li>
-<li class="chapter" data-level="5.2" data-path="combining-vector-and-raster-data.html"><a href="combining-vector-and-raster-data.html#header-2-3"><i class="fa fa-check"></i><b>5.2</b> Header 2</a></li>
+<li class="chapter" data-level="5.1" data-path="combining-vector-and-raster-data.html"><a href="combining-vector-and-raster-data.html#challenge-1-which-climate-do-koalas-like"><i class="fa fa-check"></i><b>5.1</b> Challenge 1: Which climate do koalas like?</a></li>
+<li class="chapter" data-level="5.2" data-path="combining-vector-and-raster-data.html"><a href="combining-vector-and-raster-data.html#challenge-2-extract-rasters-to-polygons-how-to-summarize-more-complex-extractions."><i class="fa fa-check"></i><b>5.2</b> Challenge 2: Extract rasters to polygons: how to summarize more complex extractions.</a></li>
+<li class="chapter" data-level="5.3" data-path="combining-vector-and-raster-data.html"><a href="combining-vector-and-raster-data.html#attach-the-new-information-to-your-shapefile"><i class="fa fa-check"></i><b>5.3</b> Attach the new information to your shapefile</a></li>
+<li class="chapter" data-level="5.4" data-path="combining-vector-and-raster-data.html"><a href="combining-vector-and-raster-data.html#count-points-in-polygons"><i class="fa fa-check"></i><b>5.4</b> Count points in polygons</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="plotting-in-base-r.html"><a href="plotting-in-base-r.html"><i class="fa fa-check"></i><b>6</b> Plotting in Base R</a></li>
-<li class="chapter" data-level="7" data-path="plotting-in-ggplot2.html"><a href="plotting-in-ggplot2.html"><i class="fa fa-check"></i><b>7</b> Plotting in ggplot2</a></li>
+<li class="chapter" data-level="6" data-path="plotting-in-base-r.html"><a href="plotting-in-base-r.html"><i class="fa fa-check"></i><b>6</b> Plotting in Base <code>R</code></a><ul>
+<li class="chapter" data-level="6.1" data-path="plotting-in-base-r.html"><a href="plotting-in-base-r.html#challenge-1-make-a-simple-map"><i class="fa fa-check"></i><b>6.1</b> Challenge 1: Make a simple map</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="plotting-in-ggplot2.html"><a href="plotting-in-ggplot2.html"><i class="fa fa-check"></i><b>7</b> Plotting in <code>ggplot2</code></a><ul>
+<li class="chapter" data-level="7.1" data-path="plotting-in-ggplot2.html"><a href="plotting-in-ggplot2.html#creating-high-quality-graphics"><i class="fa fa-check"></i><b>7.1</b> Creating high quality graphics</a></li>
+<li class="chapter" data-level="7.2" data-path="plotting-in-ggplot2.html"><a href="plotting-in-ggplot2.html#grammar-of-graphics"><i class="fa fa-check"></i><b>7.2</b> Grammar of Graphics</a></li>
+<li class="chapter" data-level="7.3" data-path="plotting-in-ggplot2.html"><a href="plotting-in-ggplot2.html#plotting-spatial-data-in-ggplot"><i class="fa fa-check"></i><b>7.3</b> Plotting spatial data in ggplot</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="plotting-in-ggplot2.html"><a href="plotting-in-ggplot2.html#plotting-vector-data"><i class="fa fa-check"></i><b>7.3.1</b> Plotting vector data</a></li>
+<li class="chapter" data-level="7.3.2" data-path="plotting-in-ggplot2.html"><a href="plotting-in-ggplot2.html#different-spatial-reference-in-plotting"><i class="fa fa-check"></i><b>7.3.2</b> Different spatial reference in plotting</a></li>
+<li class="chapter" data-level="7.3.3" data-path="plotting-in-ggplot2.html"><a href="plotting-in-ggplot2.html#plotting-raster-data"><i class="fa fa-check"></i><b>7.3.3</b> Plotting raster data</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -106,13 +203,348 @@
             <section class="normal" id="section-">
 <div id="vector-data" class="section level1">
 <h1><span class="header-section-number">3</span> Vector Data</h1>
-<div id="header-1-1" class="section level2">
-<h2><span class="header-section-number">3.1</span> Header 1</h2>
-<p>Text</p>
+<div id="vector-data-and-features" class="section level2">
+<h2><span class="header-section-number">3.1</span> Vector data and features</h2>
+<p>A feature is thought of as a thing, or an object in the real world, such as a building or a tree. As is the case with <em>objects</em>, they often consist of other objects. This is the case with features too: <strong>a set of features can form a single feature</strong>. A forest stand can be a feature, a forest can be a feature, a city can be a feature (by Edzer Pebesma).</p>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 </div>
-<div id="header-2-1" class="section level2">
-<h2><span class="header-section-number">3.2</span> Header 2</h2>
-<p>Text</p>
+<div id="simple-features-in-r" class="section level2">
+<h2><span class="header-section-number">3.2</span> Simple features in <code>R</code></h2>
+<p>The definition of <strong>simple features</strong> in <a href="https://en.wikipedia.org/wiki/Simple_Features">wikipedia</a>.</p>
+<p><img src="images/simple_features.png" /></p>
+<p>The structure of the data in <code>R</code> is as follow:</p>
+<p><img src="images/sf_xfig.png" /></p>
+<p>We highly recommed reading <a href="https://r-spatial.github.io/sf/articles/sf1.html">the simple feature web page</a>.</p>
+</div>
+<div id="sf-package" class="section level2">
+<h2><span class="header-section-number">3.3</span> sf package</h2>
+<p>Ths <code>sf</code> package provides <em>simple feature access</em> for <code>R</code>. The <code>sf</code> object is a <code>data.frame</code> with a <em>geometry list-column</em>. It supports different format and spatial references since it is connected to <strong>GDAL</strong> and <strong>PROJ</strong>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(sf)</a></code></pre></div>
+<div id="reading-and-converting-data-to-sf" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Reading and converting data to <code>sf</code></h3>
+<p>You can read files directly to <code>sf</code> or convert them from other object types (e.g. <code>data.frame</code> or <code>sp</code> objects).</p>
+<p>Now, we can read a polygon map of Australia in <strong>shapefile (.shp)</strong>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">states &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;data/Australia/Australia_proj.shp&quot;</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3">states</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw">plot</span>(states)</a>
+<a class="sourceLine" id="cb2-6" title="6"></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co"># plot only the geometry</span></a>
+<a class="sourceLine" id="cb2-8" title="8"></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="kw">plot</span>(<span class="kw">st_geometry</span>(states))</a></code></pre></div>
+<pre><code>## Simple feature collection with 8 features and 4 fields
+## geometry type:  POLYGON
+## dimension:      XY
+## bbox:           xmin: -2063975 ymin: -4965263 xmax: 1891143 ymax: -1285856
+## epsg (SRID):    NA
+## proj4string:    +proj=lcc +lat_1=-18 +lat_2=-36 +lat_0=0 +lon_0=134 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs
+##   STATE                    STATENAME SHAPE_Leng  SHAPE_Area
+## 1     9            Western Australia 102.585497 227.4586760
+## 2     5                   Queensland  78.230893 151.7205320
+## 3     6              South Australia  61.940128  91.7623310
+## 4     8                     Victoria  35.336464  22.9619050
+## 5     1 Australian Capital Territory   2.757198   0.2338955
+## 6     7                     Tasmania  21.742202   7.0119035
+## 7     3              New South Wales  52.471221  76.6085725
+## 8     4           Northern Territory  67.244892 115.0931295
+##                         geometry
+## 1 POLYGON ((-869275 -1649846,...
+## 2 POLYGON ((1224467 -1789526,...
+## 3 POLYGON ((-494224 -2961045,...
+## 4 POLYGON ((643286.2 -3849372...
+## 5 POLYGON ((1368783 -4037628,...
+## 6 POLYGON ((1166744 -4924361,...
+## 7 POLYGON ((1587643 -3346985,...
+## 8 POLYGON ((285958.2 -1394759...</code></pre>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># plot only the geometry</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="kw">plot</span>(<span class="kw">st_geometry</span>(states))</a></code></pre></div>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Here we want to read <strong>koala.csv</strong> file into <code>R</code> and convert it to <code>sf</code> object. This file contains <em>longitude</em> and <em>latitude</em> columns that we can use to create <code>sf</code> object.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># reading csv file</span></a>
+<a class="sourceLine" id="cb5-2" title="2"></a>
+<a class="sourceLine" id="cb5-3" title="3">koala &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;data/koala.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb5-4" title="4"></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="kw">head</span>(koala) <span class="co"># see the first few rows</span></a></code></pre></div>
+<pre><code>##           Genus                Species Longitude  Latitude
+## 1 Phascolarctos Phascolarctos cinereus  152.7297 -30.18316
+## 2 Phascolarctos Phascolarctos cinereus  151.8413 -32.79279
+## 3 Phascolarctos Phascolarctos cinereus  152.7621 -30.23195
+## 4 Phascolarctos Phascolarctos cinereus  138.7290 -34.94308
+## 5 Phascolarctos Phascolarctos cinereus  153.5165 -28.58857
+## 6 Phascolarctos Phascolarctos cinereus  153.2155 -27.49284</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># convert to sf</span></a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3">koala_sf &lt;-<span class="st"> </span><span class="kw">st_as_sf</span>(koala, </a>
+<a class="sourceLine" id="cb7-4" title="4">                     <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;Longitude&quot;</span>, </a>
+<a class="sourceLine" id="cb7-5" title="5">                                <span class="st">&quot;Latitude&quot;</span>), </a>
+<a class="sourceLine" id="cb7-6" title="6">                     <span class="dt">crs =</span> <span class="dv">4326</span>)</a>
+<a class="sourceLine" id="cb7-7" title="7"></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="kw">plot</span>(koala_sf)</a></code></pre></div>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="import-data-from-packages" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> Import data from packages</h3>
+<p>We can use <strong>rworldmap</strong> package to download the boundary map of the world. This package provides the <code>SpatialPolygonsDataFrame</code> object of the world’s countries. We can convert it to <code>sf</code>. For this purpose we use the <code>dplyr</code> package and its <em>piping</em> functionality to simplify the code!</p>
+<p>Remember to load <code>dplyr</code> or <code>tidyverse</code> package.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">library</span>(rworldmap)</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb8-3" title="3"></a>
+<a class="sourceLine" id="cb8-4" title="4">wmap &lt;-<span class="st"> </span>rworldmap<span class="op">::</span><span class="kw">getMap</span>(<span class="dt">resolution =</span> <span class="st">&quot;low&quot;</span>)  <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># this is SpatialPolygonDataFrame</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="st">  </span><span class="kw">st_as_sf</span>()</a>
+<a class="sourceLine" id="cb8-6" title="6"></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="kw">plot</span>(wmap[<span class="st">&quot;NAME&quot;</span>])</a></code></pre></div>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># filter Australia by dplyr</span></a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3">australia &lt;-<span class="st"> </span>wmap <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="st">  </span><span class="kw">filter</span>(NAME <span class="op">==</span><span class="st"> &quot;Australia&quot;</span>)</a>
+<a class="sourceLine" id="cb9-5" title="5"></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="co"># plot only the geomety of asutalia</span></a>
+<a class="sourceLine" id="cb9-7" title="7"></a>
+<a class="sourceLine" id="cb9-8" title="8"><span class="kw">plot</span>(australia<span class="op">$</span>geometry, <span class="dt">axes =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+<p>We can get the cities of Australia from <code>maps</code> package.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">library</span>(maps)</a>
+<a class="sourceLine" id="cb10-2" title="2"></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="kw">data</span>(world.cities)</a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="kw">head</span>(world.cities)</a></code></pre></div>
+<pre><code>##                 name country.etc   pop   lat  long capital
+## 1 &#39;Abasan al-Jadidah   Palestine  5629 31.31 34.34       0
+## 2 &#39;Abasan al-Kabirah   Palestine 18999 31.32 34.35       0
+## 3       &#39;Abdul Hakim    Pakistan 47788 30.55 72.11       0
+## 4 &#39;Abdullah-as-Salam      Kuwait 21817 29.36 47.98       0
+## 5              &#39;Abud   Palestine  2456 32.03 35.07       0
+## 6            &#39;Abwein   Palestine  3434 32.03 35.20       0</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">cities &lt;-<span class="st"> </span><span class="kw">st_as_sf</span>(world.cities, </a>
+<a class="sourceLine" id="cb12-2" title="2">                   <span class="dt">coords =</span> <span class="kw">c</span>(<span class="st">&quot;long&quot;</span>, </a>
+<a class="sourceLine" id="cb12-3" title="3">                              <span class="st">&quot;lat&quot;</span>), </a>
+<a class="sourceLine" id="cb12-4" title="4">                   <span class="dt">crs =</span> <span class="dv">4326</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="st">  </span><span class="kw">filter</span>(country.etc <span class="op">==</span><span class="st"> &quot;Australia&quot;</span>)</a>
+<a class="sourceLine" id="cb12-6" title="6"></a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="kw">plot</span>(cities[<span class="st">&quot;pop&quot;</span>])</a></code></pre></div>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Why they are all the same colour?</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># filter cities with a population over 1 million</span></a>
+<a class="sourceLine" id="cb13-2" title="2"></a>
+<a class="sourceLine" id="cb13-3" title="3">big_cities &lt;-<span class="st"> </span><span class="kw">filter</span>(cities, </a>
+<a class="sourceLine" id="cb13-4" title="4">                     pop <span class="op">&gt;</span><span class="st"> </span><span class="fl">1e6</span>)</a>
+<a class="sourceLine" id="cb13-5" title="5"></a>
+<a class="sourceLine" id="cb13-6" title="6"><span class="kw">plot</span>(australia<span class="op">$</span>geometry)</a>
+<a class="sourceLine" id="cb13-7" title="7"></a>
+<a class="sourceLine" id="cb13-8" title="8"><span class="kw">plot</span>(big_cities[<span class="st">&quot;pop&quot;</span>], </a>
+<a class="sourceLine" id="cb13-9" title="9">     <span class="dt">cex =</span> big_cities<span class="op">$</span>pop <span class="op">/</span><span class="st"> </span><span class="fl">1e6</span>, </a>
+<a class="sourceLine" id="cb13-10" title="10">     <span class="dt">lwd =</span> <span class="dv">2</span>, </a>
+<a class="sourceLine" id="cb13-11" title="11">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+</div>
+<div id="transform-coordinate-reference-system" class="section level2">
+<h2><span class="header-section-number">3.4</span> Transform coordinate reference system</h2>
+<p>Now, we want to put the <code>koala_sf</code> on top of <code>states</code> map to see where koalas occur!</p>
+<p>What happend?!</p>
+<p>Check the coordinate reference of both maps! Are they the same?</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">st_crs</span>(states)</a></code></pre></div>
+<pre><code>## Coordinate Reference System:
+##   No EPSG code
+##   proj4string: &quot;+proj=lcc +lat_1=-18 +lat_2=-36 +lat_0=0 +lon_0=134 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs&quot;</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">st_crs</span>(koala_sf)</a></code></pre></div>
+<pre><code>## Coordinate Reference System:
+##   EPSG: 4326 
+##   proj4string: &quot;+proj=longlat +datum=WGS84 +no_defs&quot;</code></pre>
+<p>Two map layers should have the same spatial reference to be plotted on the correct location relative to each other. For this, we need to change <code>koala_sf</code> to be the same as <code>states</code> or vice versa.</p>
+<p>Notice, the <code>crs</code> argument acsepts the <a href="https://support.esri.com/en/technical-article/000002814"><code>EPSG</code></a> code as well.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># change the projection</span></a>
+<a class="sourceLine" id="cb18-2" title="2"></a>
+<a class="sourceLine" id="cb18-3" title="3">koala_proj &lt;-<span class="st"> </span><span class="kw">st_transform</span>(koala_sf, </a>
+<a class="sourceLine" id="cb18-4" title="4">                           <span class="dt">crs =</span> <span class="dv">3112</span>)</a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="co"># or</span></a>
+<a class="sourceLine" id="cb18-6" title="6"></a>
+<a class="sourceLine" id="cb18-7" title="7">koala_proj &lt;-<span class="st"> </span><span class="kw">st_transform</span>(koala_sf, </a>
+<a class="sourceLine" id="cb18-8" title="8">                           <span class="dt">crs =</span> <span class="kw">st_crs</span>(states))</a>
+<a class="sourceLine" id="cb18-9" title="9"></a>
+<a class="sourceLine" id="cb18-10" title="10"><span class="co"># plot both layers</span></a>
+<a class="sourceLine" id="cb18-11" title="11"></a>
+<a class="sourceLine" id="cb18-12" title="12"><span class="kw">plot</span>(<span class="kw">st_geometry</span>(states), </a>
+<a class="sourceLine" id="cb18-13" title="13">     <span class="dt">axes =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb18-14" title="14"></a>
+<a class="sourceLine" id="cb18-15" title="15"><span class="kw">plot</span>(koala_proj, </a>
+<a class="sourceLine" id="cb18-16" title="16">     <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, </a>
+<a class="sourceLine" id="cb18-17" title="17">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## Warning in plot.sf(koala_proj, col = &quot;blue&quot;, add = TRUE): ignoring all but
+## the first attribute</code></pre>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<hr />
+</div>
+<div id="challenge-one" class="section level2">
+<h2><span class="header-section-number">3.5</span> Challenge one</h2>
+<p>Load the <strong>Australia_proj</strong> and <strong>koala</strong> data and plot them on top of each other in <strong>Mercator projection (EPSG: 4326)</strong>.
+Note: check the spatial reference of the maps first!</p>
+<p>Directory of the data:<br />
+<code>data/Australia/Australia_proj.shp</code><br />
+<code>data/koala.csv</code></p>
+<hr />
+</div>
+<div id="geometric-operations" class="section level2">
+<h2><span class="header-section-number">3.6</span> Geometric operations</h2>
+<div id="cropping-sf" class="section level3">
+<h3><span class="header-section-number">3.6.1</span> Cropping sf</h3>
+<p>You can clip the <code>sf</code> object by another <code>sf</code> object or an <code>extent</code> object. The <code>extent</code> object can come from a layer (<code>st_bbox</code> for sf and <code>extent</code> for rasters) or we can draw one by <code>drawExtent</code> function in the <code>raster</code> package. First, you need to plot a map, then run this function. For drawing the extent you should click on two points in the plotted map.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">library</span>(raster)</a>
+<a class="sourceLine" id="cb20-2" title="2"></a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="co"># first plot the map</span></a>
+<a class="sourceLine" id="cb20-4" title="4"></a>
+<a class="sourceLine" id="cb20-5" title="5"><span class="kw">plot</span>(australia<span class="op">$</span>geometry, </a>
+<a class="sourceLine" id="cb20-6" title="6">     <span class="dt">axes =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb20-7" title="7"></a>
+<a class="sourceLine" id="cb20-8" title="8"><span class="co"># draw extent manually</span></a>
+<a class="sourceLine" id="cb20-9" title="9"></a>
+<a class="sourceLine" id="cb20-10" title="10">ext &lt;-<span class="st"> </span><span class="kw">drawExtent</span>()</a></code></pre></div>
+<p><img src="images/darwExt.jpeg" /></p>
+<p>Now, you can use this object to clip a vector layer.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">australia_clip &lt;-<span class="st"> </span><span class="kw">st_crop</span>(australia, </a>
+<a class="sourceLine" id="cb21-2" title="2">                          ext)</a>
+<a class="sourceLine" id="cb21-3" title="3"></a>
+<a class="sourceLine" id="cb21-4" title="4"><span class="kw">plot</span>(australia_clip<span class="op">$</span>geometry, </a>
+<a class="sourceLine" id="cb21-5" title="5">     <span class="dt">axes =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+<div id="buffer-and-join" class="section level3">
+<h3><span class="header-section-number">3.6.2</span> Buffer and join</h3>
+<p>In many cases, you need to specify a zone around your map features. We can do this with <code>buffer</code> function in GIS and <code>R</code>. In many GIS software, the distance you specify for your buffers is in the unit of the input features (e.g. degree for the <em>latlong</em> coordinates and meters for <em>Lambert</em> or <em>UTM</em>), with an exception of <code>buffer</code> function in <code>raster</code> package.<br />
+Here we use <code>koala_proj</code> object which is in the <strong>Lambert</strong> coordinate system, so the unit is in metres. The <code>st_buffer</code> is the function we need here.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">buf &lt;-<span class="st"> </span><span class="kw">st_buffer</span>(koala_proj, </a>
+<a class="sourceLine" id="cb22-2" title="2">                 <span class="fl">2e5</span>)</a>
+<a class="sourceLine" id="cb22-3" title="3"></a>
+<a class="sourceLine" id="cb22-4" title="4"><span class="kw">plot</span>(<span class="kw">st_geometry</span>(states))</a>
+<a class="sourceLine" id="cb22-5" title="5"></a>
+<a class="sourceLine" id="cb22-6" title="6"><span class="kw">plot</span>(<span class="kw">st_geometry</span>(koala_proj), </a>
+<a class="sourceLine" id="cb22-7" title="7">     <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>,</a>
+<a class="sourceLine" id="cb22-8" title="8">     <span class="dt">pch =</span> <span class="dv">16</span>, </a>
+<a class="sourceLine" id="cb22-9" title="9">     <span class="dt">cex =</span> <span class="fl">0.5</span>, </a>
+<a class="sourceLine" id="cb22-10" title="10">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb22-11" title="11"></a>
+<a class="sourceLine" id="cb22-12" title="12"><span class="kw">plot</span>(<span class="kw">st_geometry</span>(buf), </a>
+<a class="sourceLine" id="cb22-13" title="13">     <span class="dt">border =</span> <span class="st">&quot;red&quot;</span>, </a>
+<a class="sourceLine" id="cb22-14" title="14">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>As you see in the plot, for each point in the koala data, a buffer has been created. If the buffer area as a whole is the your purpose and the individual buffers is not important for you, you can use the <code>st_join</code> function to merge all the features in your buffer layer.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">buf &lt;-<span class="st"> </span><span class="kw">st_buffer</span>(koala_proj, </a>
+<a class="sourceLine" id="cb23-2" title="2">                 <span class="fl">2e5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="st">  </span><span class="kw">st_union</span>()</a>
+<a class="sourceLine" id="cb23-4" title="4"></a>
+<a class="sourceLine" id="cb23-5" title="5"><span class="kw">plot</span>(<span class="kw">st_geometry</span>(states))</a>
+<a class="sourceLine" id="cb23-6" title="6"></a>
+<a class="sourceLine" id="cb23-7" title="7"><span class="kw">plot</span>(<span class="kw">st_geometry</span>(koala_proj), </a>
+<a class="sourceLine" id="cb23-8" title="8">     <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, </a>
+<a class="sourceLine" id="cb23-9" title="9">     <span class="dt">pch =</span> <span class="dv">16</span>, </a>
+<a class="sourceLine" id="cb23-10" title="10">     <span class="dt">cex =</span> <span class="fl">0.5</span>, </a>
+<a class="sourceLine" id="cb23-11" title="11">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb23-12" title="12"></a>
+<a class="sourceLine" id="cb23-13" title="13"><span class="kw">plot</span>(<span class="kw">st_geometry</span>(buf), </a>
+<a class="sourceLine" id="cb23-14" title="14">     <span class="dt">border =</span> <span class="st">&quot;red&quot;</span>, </a>
+<a class="sourceLine" id="cb23-15" title="15">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+</div>
+<div id="spatial-join-and-intersection" class="section level3">
+<h3><span class="header-section-number">3.6.3</span> Spatial join and intersection</h3>
+<p>Imagine you want to check how many of your koala points fall in each state. This can be done by <code>st_intersection</code> function. Notice that <code>st_intersects</code> function is a similar function, but <em>it does not return a spatial object</em>. With this function, the attribute of the second layer will be joined to the first layer where they have a spatial intersection. This is also called <strong>spatial join</strong> in GIS.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">koala_states &lt;-<span class="st"> </span><span class="kw">st_intersection</span>(koala_proj, </a>
+<a class="sourceLine" id="cb24-2" title="2">                                states)</a></code></pre></div>
+<pre><code>## Warning: attribute variables are assumed to be spatially constant
+## throughout all geometries</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">table</span>(koala_states<span class="op">$</span>STATENAME)</a></code></pre></div>
+<pre><code>## 
+## Australian Capital Territory              New South Wales 
+##                            0                          181 
+##           Northern Territory                   Queensland 
+##                            0                           16 
+##              South Australia                     Tasmania 
+##                           14                            0 
+##                     Victoria            Western Australia 
+##                           31                            0</code></pre>
+<p>There are a lot of other geometric operations and handy functions to check the topologic relationship of simple features in <code>sf</code> package. To see more examples see <a href="https://cran.r-project.org/web/packages/sf/vignettes/sf3.html">the sf package vignettes</a>.</p>
+</div>
+<div id="nearest-distance" class="section level3">
+<h3><span class="header-section-number">3.6.4</span> Nearest distance</h3>
+<p>Spatial distance is a very important functionality in spatial analysis. Calculating the distance between features is very easy in GIS. Here we want to calculate the distance between the koala points and Australia coastline.</p>
+<p>First, we need to convert the Australia map to line object, then calculate the points to the line. This is because the distance of the points to a polygon that contains them is zero. We can do this by <code>st_cast</code> function.</p>
+<p>To calculate the spatial distance of the points to the line, <code>st_distance</code> function is used. This function returns a <em>dense distance matrix</em> that shows the pairwise distance of every single feature in both datasets. The output object would be in <code>units</code> so we can convert it to numeric.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="co"># change polygon to line</span></a>
+<a class="sourceLine" id="cb28-2" title="2"></a>
+<a class="sourceLine" id="cb28-3" title="3">aus_line &lt;-<span class="st"> </span><span class="kw">st_cast</span>(australia_clip, </a>
+<a class="sourceLine" id="cb28-4" title="4">                    <span class="st">&quot;MULTILINESTRING&quot;</span>)</a>
+<a class="sourceLine" id="cb28-5" title="5"></a>
+<a class="sourceLine" id="cb28-6" title="6"><span class="co"># calculate distance and save it in coastdist column</span></a>
+<a class="sourceLine" id="cb28-7" title="7"></a>
+<a class="sourceLine" id="cb28-8" title="8">koala_sf<span class="op">$</span>coastdist &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">st_distance</span>(koala_sf, </a>
+<a class="sourceLine" id="cb28-9" title="9">                                             aus_line))</a>
+<a class="sourceLine" id="cb28-10" title="10"></a>
+<a class="sourceLine" id="cb28-11" title="11"><span class="kw">plot</span>(australia_clip<span class="op">$</span>geometry)</a>
+<a class="sourceLine" id="cb28-12" title="12"></a>
+<a class="sourceLine" id="cb28-13" title="13"><span class="kw">plot</span>(koala_sf[<span class="st">&quot;coastdist&quot;</span>], </a>
+<a class="sourceLine" id="cb28-14" title="14">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>Here, the distance matrix is a <code>[250 x 1]</code> matrix (250 koala points and 1 line of coastline). In the cases where there are more several features in both layers, you need to calculate the <code>min</code> of each row of the output matrix (e.g. with <code>apply</code> function).</p>
+<p>When you want to calculate the nearest distance of every feature in the same layer, you need to repeat the same layer in the <code>st_distance</code> function twice and then calculate the minimum distance. But here is not that easy! Because the nearest distance of every object in the same layer would be itself <em>i.e. the min distance for all of the features would be zero</em>. So, you need to discard the self-distance in the calculating minimum function. You can use the following function to do that. You might be able to find an easier or more efficient way to do that.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">koala_dist &lt;-<span class="st"> </span><span class="kw">st_distance</span>(koala_proj, </a>
+<a class="sourceLine" id="cb29-2" title="2">                          koala_proj)</a>
+<a class="sourceLine" id="cb29-3" title="3"></a>
+<a class="sourceLine" id="cb29-4" title="4"><span class="kw">dim</span>(koala_dist) <span class="co"># dimention of the dist matrix</span></a></code></pre></div>
+<pre><code>## [1] 250 250</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">koala_dist[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</a></code></pre></div>
+<pre><code>## Units: [m]
+##             [,1]      [,2]        [,3]    [,4]      [,5]
+## [1,]       0.000  298613.7    6173.952 1404940  190336.9
+## [2,]  298613.686       0.0  294356.980 1229357  487957.8
+## [3,]    6173.952  294357.0       0.000 1405478  194075.2
+## [4,] 1404940.357 1229357.4 1405478.023       0 1552826.2
+## [5,]  190336.917  487957.8  194075.206 1552826       0.0</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="co"># function to calculate min distance excluding the self-distance</span></a>
+<a class="sourceLine" id="cb33-2" title="2"></a>
+<a class="sourceLine" id="cb33-3" title="3">mindist &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb33-4" title="4">  </a>
+<a class="sourceLine" id="cb33-5" title="5">  mindis &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="dt">mode =</span> <span class="st">&quot;numeric&quot;</span>, <span class="dt">length =</span> <span class="kw">nrow</span>(x))</a>
+<a class="sourceLine" id="cb33-6" title="6">  </a>
+<a class="sourceLine" id="cb33-7" title="7">  <span class="cf">for</span>(i <span class="cf">in</span> <span class="kw">seq_len</span>(<span class="kw">nrow</span>(x))){</a>
+<a class="sourceLine" id="cb33-8" title="8">    </a>
+<a class="sourceLine" id="cb33-9" title="9">    mindis[i] &lt;-<span class="st"> </span><span class="kw">min</span>(x[i, <span class="op">-</span>i])</a>
+<a class="sourceLine" id="cb33-10" title="10">    </a>
+<a class="sourceLine" id="cb33-11" title="11">  }</a>
+<a class="sourceLine" id="cb33-12" title="12">  </a>
+<a class="sourceLine" id="cb33-13" title="13">  <span class="kw">return</span>(mindis)</a>
+<a class="sourceLine" id="cb33-14" title="14">  </a>
+<a class="sourceLine" id="cb33-15" title="15">}</a>
+<a class="sourceLine" id="cb33-16" title="16"></a>
+<a class="sourceLine" id="cb33-17" title="17"><span class="co"># calculate min distance and save it in ndist column</span></a>
+<a class="sourceLine" id="cb33-18" title="18"></a>
+<a class="sourceLine" id="cb33-19" title="19">koala_proj<span class="op">$</span>ndist &lt;-<span class="st"> </span><span class="kw">mindist</span>(koala_dist)</a>
+<a class="sourceLine" id="cb33-20" title="20"></a>
+<a class="sourceLine" id="cb33-21" title="21"><span class="kw">plot</span>(koala_proj[<span class="st">&quot;ndist&quot;</span>])</a></code></pre></div>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+</div>
+<div id="write-spatial-data" class="section level2">
+<h2><span class="header-section-number">3.7</span> Write spatial data</h2>
+<p>To write your spatial vector data in your hard disk, you can use <code>st_write</code> function.</p>
+<p>Here we write the <code>koala_proj</code> data to <a href="https://www.geopackage.org/"><code>GeoPackage</code></a> format. <strong>GeoPackage</strong> is an OGC standard and open format for transferring geospatial information. It is platform-independent, portable, and a compact format.</p>
+<p>The old and familiar <code>shapefile</code> format has some drawbacks. For instance:</p>
+<ol style="list-style-type: decimal">
+<li>It stores in several individual files in hard disk</li>
+<li>Size limitation to 2GB</li>
+<li>Column names are limited to 12 characters</li>
+</ol>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">st_write</span>(koala_proj, </a>
+<a class="sourceLine" id="cb34-2" title="2">         <span class="st">&quot;data/koala_projected.gpkg&quot;</span>)</a></code></pre></div>
+<p>You can read <code>.gpkg</code> format the same way you read <code>.shp</code> files (with <code>st_read</code> function). <strong>GeoPackage</strong> is supported by <strong>GDAL</strong>, it means you can read and write them in all (updated) GIS software like <strong>QGIS</strong>.</p>
+<hr />
+</div>
+<div id="challenge-two" class="section level2">
+<h2><span class="header-section-number">3.8</span> Challenge two</h2>
+<p>Load the city maps and calculate the nearest straight distance to the coastline of the cities with 0.5 m population and plot the distance. Then save the output layer in <strong>GeoPackage</strong>.</p>
+<hr />
 
 </div>
 </div>
