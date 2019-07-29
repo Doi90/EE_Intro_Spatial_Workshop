@@ -261,7 +261,7 @@ In many cases, you need to specify a zone around your map features. We can do th
 Here we use `koala_proj` object which is in the **Lambert** coordinate system, so the unit is in metres. The `st_buffer` is the function we need here.  
 
 ```{r}
-buf <- st_buffer(koala_proj, 1e5)
+buf <- st_buffer(koala_proj, 2e5)
 
 plot(st_geometry(states))
 plot(st_geometry(koala_proj), col = "blue", pch = 16, cex = 0.5, add = TRUE)
@@ -272,7 +272,7 @@ plot(st_geometry(buf), border = "red", add = TRUE)
 As you see in the plot, for each point in the koala data, a buffer has been created. If the buffer area as a whole is the your purpose and the individual buffers is not important for you, you can use the `st_join` function to merge all the features in your buffer layer.    
 
 ```{r}
-buf <- st_buffer(koala_proj, 1.5e5) %>% 
+buf <- st_buffer(koala_proj, 2e5) %>% 
   st_union()
 
 plot(st_geometry(states))
