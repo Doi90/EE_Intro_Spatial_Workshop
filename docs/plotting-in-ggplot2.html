@@ -128,7 +128,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Intro to spatial analysis in R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Header fo text on homepage</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Home page</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="vector-data.html"><a href="vector-data.html"><i class="fa fa-check"></i><b>3</b> Vector Data</a><ul>
 <li class="chapter" data-level="3.1" data-path="vector-data.html"><a href="vector-data.html#vector-data-and-features"><i class="fa fa-check"></i><b>3.1</b> Vector data and features</a></li>
@@ -223,79 +223,78 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb125-3" title="3"><span class="kw">library</span>(raster)</a>
 <a class="sourceLine" id="cb125-4" title="4"><span class="kw">library</span>(tidyverse) <span class="co"># this includes ggplot</span></a>
 <a class="sourceLine" id="cb125-5" title="5"><span class="kw">library</span>(viridis) <span class="co"># for colour scheme</span></a></code></pre></div>
-<pre><code>## Loading required package: viridisLite</code></pre>
 </div>
 <div id="plotting-spatial-data-in-ggplot" class="section level2">
 <h2><span class="header-section-number">7.3</span> Plotting spatial data in ggplot</h2>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" title="1"><span class="co"># loading world map</span></a>
-<a class="sourceLine" id="cb127-2" title="2"><span class="kw">library</span>(rworldmap)</a>
-<a class="sourceLine" id="cb127-3" title="3"></a>
-<a class="sourceLine" id="cb127-4" title="4">wmap &lt;-<span class="st"> </span>rworldmap<span class="op">::</span><span class="kw">getMap</span>(<span class="dt">resolution =</span> <span class="st">&quot;low&quot;</span>)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb127-5" title="5"><span class="st">  </span><span class="kw">st_as_sf</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" title="1"><span class="co"># loading world map</span></a>
+<a class="sourceLine" id="cb126-2" title="2"><span class="kw">library</span>(rworldmap)</a>
+<a class="sourceLine" id="cb126-3" title="3"></a>
+<a class="sourceLine" id="cb126-4" title="4">wmap &lt;-<span class="st"> </span>rworldmap<span class="op">::</span><span class="kw">getMap</span>(<span class="dt">resolution =</span> <span class="st">&quot;low&quot;</span>)  <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb126-5" title="5"><span class="st">  </span><span class="kw">st_as_sf</span>()</a></code></pre></div>
 <div id="plotting-vector-data" class="section level3">
 <h3><span class="header-section-number">7.3.1</span> Plotting vector data</h3>
 <p>Plotting vector data with <code>sf</code> is very easy! You only need to provide the data with a <em>sf object</em> and use <code>geom_sf</code>. No need to specify <code>x</code> and <code>y</code> coordinates.</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> wmap) <span class="op">+</span></a>
-<a class="sourceLine" id="cb128-2" title="2"><span class="st">  </span><span class="kw">geom_sf</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> wmap) <span class="op">+</span></a>
+<a class="sourceLine" id="cb127-2" title="2"><span class="st">  </span><span class="kw">geom_sf</span>()</a></code></pre></div>
 <p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
 <p>Now, the colour and background can be changed.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> wmap) <span class="op">+</span></a>
-<a class="sourceLine" id="cb129-2" title="2"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> NAME)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb129-3" title="3"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb129-4" title="4"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="co"># don&#39;t show legend</span></a></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> wmap) <span class="op">+</span></a>
+<a class="sourceLine" id="cb128-2" title="2"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="kw">aes</span>(<span class="dt">fill =</span> NAME)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb128-3" title="3"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb128-4" title="4"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="ot">FALSE</span>) <span class="co"># don&#39;t show legend</span></a></code></pre></div>
 <p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
 </div>
 <div id="different-spatial-reference-in-plotting" class="section level3">
 <h3><span class="header-section-number">7.3.2</span> Different spatial reference in plotting</h3>
 <p>Use <code>coord_sf</code> to specify the projection that map is going to be plotted with.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" title="1"><span class="co"># see the coordinate system string</span></a>
-<a class="sourceLine" id="cb130-2" title="2"><span class="kw">st_crs</span>(<span class="dv">3035</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" title="1"><span class="co"># see the coordinate system string</span></a>
+<a class="sourceLine" id="cb129-2" title="2"><span class="kw">st_crs</span>(<span class="dv">3035</span>)</a></code></pre></div>
 <pre><code>## Coordinate Reference System:
 ##   EPSG: 3035 
 ##   proj4string: &quot;+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs&quot;</code></pre>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> wmap) <span class="op">+</span></a>
-<a class="sourceLine" id="cb132-2" title="2"><span class="st">  </span><span class="kw">geom_sf</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb132-3" title="3"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb132-4" title="4"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">3035</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> wmap) <span class="op">+</span></a>
+<a class="sourceLine" id="cb131-2" title="2"><span class="st">  </span><span class="kw">geom_sf</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb131-3" title="3"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb131-4" title="4"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">3035</span>)</a></code></pre></div>
 <p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
 <p>You can aslo change the colour of background.</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" title="1"><span class="co"># read Australia polygon shapefile</span></a>
-<a class="sourceLine" id="cb133-2" title="2">au &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;data/AU_states.shp&quot;</span>, </a>
-<a class="sourceLine" id="cb133-3" title="3">              <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb133-4" title="4"></a>
-<a class="sourceLine" id="cb133-5" title="5"><span class="kw">ggplot</span>(<span class="dt">data =</span> au) <span class="op">+</span></a>
-<a class="sourceLine" id="cb133-6" title="6"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">size =</span> <span class="fl">0.3</span>, </a>
-<a class="sourceLine" id="cb133-7" title="7">          <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># change the line size and polygon colours</span></a>
-<a class="sourceLine" id="cb133-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb133-9" title="9"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">3112</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb133-10" title="10"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue2&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" title="1"><span class="co"># read Australia polygon shapefile</span></a>
+<a class="sourceLine" id="cb132-2" title="2">au &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;data/AU_states.shp&quot;</span>, </a>
+<a class="sourceLine" id="cb132-3" title="3">              <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb132-4" title="4"></a>
+<a class="sourceLine" id="cb132-5" title="5"><span class="kw">ggplot</span>(<span class="dt">data =</span> au) <span class="op">+</span></a>
+<a class="sourceLine" id="cb132-6" title="6"><span class="st">  </span><span class="kw">geom_sf</span>(<span class="dt">size =</span> <span class="fl">0.3</span>, </a>
+<a class="sourceLine" id="cb132-7" title="7">          <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="co"># change the line size and polygon colours</span></a>
+<a class="sourceLine" id="cb132-8" title="8"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb132-9" title="9"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">3112</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb132-10" title="10"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">panel.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill =</span> <span class="st">&quot;steelblue2&quot;</span>))</a></code></pre></div>
 <p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 </div>
 <div id="plotting-raster-data" class="section level3">
 <h3><span class="header-section-number">7.3.3</span> Plotting raster data</h3>
 <p>Raster can be large files containing millions of pixels. When you plot this data, the computer can not visualise all the details in the data. Plotting with full dataset could also be time-consuming. To plot rasters, it’s better to get a large sample of the data, then plot it. If the sample is large enough, the plotting quality won’t decrease.</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" title="1"><span class="co"># read Australia polygon shapefile</span></a>
-<a class="sourceLine" id="cb134-2" title="2"></a>
-<a class="sourceLine" id="cb134-3" title="3">au &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;data/AU_states.shp&quot;</span>, </a>
-<a class="sourceLine" id="cb134-4" title="4">              <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb134-5" title="5"></a>
-<a class="sourceLine" id="cb134-6" title="6"><span class="co"># reading raster data and clip and mask it for Australia</span></a>
-<a class="sourceLine" id="cb134-7" title="7"></a>
-<a class="sourceLine" id="cb134-8" title="8">au_temp &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="st">&quot;data/wc_tavg/wc2.0_2.5m_tavg_01.tif&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb134-9" title="9"><span class="st">  </span><span class="kw">crop</span>(au)</a>
-<a class="sourceLine" id="cb134-10" title="10"></a>
-<a class="sourceLine" id="cb134-11" title="11"><span class="co"># regular sample of 500k cells</span></a>
-<a class="sourceLine" id="cb134-12" title="12"></a>
-<a class="sourceLine" id="cb134-13" title="13">sam &lt;-<span class="st"> </span><span class="kw">sampleRegular</span>(au_temp, </a>
-<a class="sourceLine" id="cb134-14" title="14">                     <span class="dt">size =</span> <span class="fl">5e5</span>, </a>
-<a class="sourceLine" id="cb134-15" title="15">                     <span class="dt">asRaster =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb134-16" title="16"><span class="st">  </span><span class="kw">as.data.frame</span>(<span class="dt">xy =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb134-17" title="17">                <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb134-18" title="18"><span class="st">  </span><span class="kw">setNames</span>(<span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, </a>
-<a class="sourceLine" id="cb134-19" title="19">             <span class="st">&quot;y&quot;</span>, </a>
-<a class="sourceLine" id="cb134-20" title="20">             <span class="st">&quot;layer&quot;</span>))</a>
-<a class="sourceLine" id="cb134-21" title="21"></a>
-<a class="sourceLine" id="cb134-22" title="22"><span class="kw">head</span>(sam)</a></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" title="1"><span class="co"># read Australia polygon shapefile</span></a>
+<a class="sourceLine" id="cb133-2" title="2"></a>
+<a class="sourceLine" id="cb133-3" title="3">au &lt;-<span class="st"> </span><span class="kw">st_read</span>(<span class="st">&quot;data/AU_states.shp&quot;</span>, </a>
+<a class="sourceLine" id="cb133-4" title="4">              <span class="dt">quiet =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb133-5" title="5"></a>
+<a class="sourceLine" id="cb133-6" title="6"><span class="co"># reading raster data and clip and mask it for Australia</span></a>
+<a class="sourceLine" id="cb133-7" title="7"></a>
+<a class="sourceLine" id="cb133-8" title="8">au_temp &lt;-<span class="st"> </span><span class="kw">raster</span>(<span class="st">&quot;data/wc_tavg/wc2.0_2.5m_tavg_01.tif&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb133-9" title="9"><span class="st">  </span><span class="kw">crop</span>(au)</a>
+<a class="sourceLine" id="cb133-10" title="10"></a>
+<a class="sourceLine" id="cb133-11" title="11"><span class="co"># regular sample of 500k cells</span></a>
+<a class="sourceLine" id="cb133-12" title="12"></a>
+<a class="sourceLine" id="cb133-13" title="13">sam &lt;-<span class="st"> </span><span class="kw">sampleRegular</span>(au_temp, </a>
+<a class="sourceLine" id="cb133-14" title="14">                     <span class="dt">size =</span> <span class="fl">5e5</span>, </a>
+<a class="sourceLine" id="cb133-15" title="15">                     <span class="dt">asRaster =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb133-16" title="16"><span class="st">  </span><span class="kw">as.data.frame</span>(<span class="dt">xy =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb133-17" title="17">                <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb133-18" title="18"><span class="st">  </span><span class="kw">setNames</span>(<span class="kw">c</span>(<span class="st">&quot;x&quot;</span>, </a>
+<a class="sourceLine" id="cb133-19" title="19">             <span class="st">&quot;y&quot;</span>, </a>
+<a class="sourceLine" id="cb133-20" title="20">             <span class="st">&quot;layer&quot;</span>))</a>
+<a class="sourceLine" id="cb133-21" title="21"></a>
+<a class="sourceLine" id="cb133-22" title="22"><span class="kw">head</span>(sam)</a></code></pre></div>
 <pre><code>##            x         y    layer
 ## 190 122.9583 -10.73417 27.67500
 ## 191 123.0100 -10.73417 27.57143
@@ -303,24 +302,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 193 123.1133 -10.73417 26.88400
 ## 194 123.1650 -10.73417 26.35200
 ## 195 123.2167 -10.73417 26.38800</code></pre>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> sam, </a>
+<a class="sourceLine" id="cb135-2" title="2">       <span class="kw">aes</span>(<span class="dt">x =</span> x, </a>
+<a class="sourceLine" id="cb135-3" title="3">           <span class="dt">y =</span> y, </a>
+<a class="sourceLine" id="cb135-4" title="4">           <span class="dt">fill =</span> layer)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb135-5" title="5"><span class="st">  </span><span class="kw">geom_raster</span>()</a></code></pre></div>
+<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p>You can change the colour and other parametrs of the plot to make it better. It is important to use <code>coord_sf</code> or <code>coord_fixed</code> to keep the dimention of the plot fixed.</p>
 <div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> sam, </a>
 <a class="sourceLine" id="cb136-2" title="2">       <span class="kw">aes</span>(<span class="dt">x =</span> x, </a>
 <a class="sourceLine" id="cb136-3" title="3">           <span class="dt">y =</span> y, </a>
 <a class="sourceLine" id="cb136-4" title="4">           <span class="dt">fill =</span> layer)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb136-5" title="5"><span class="st">  </span><span class="kw">geom_raster</span>()</a></code></pre></div>
-<p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
-<p>You can change the colour and other parametrs of the plot to make it better. It is important to use <code>coord_sf</code> or <code>coord_fixed</code> to keep the dimention of the plot fixed.</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" title="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> sam, </a>
-<a class="sourceLine" id="cb137-2" title="2">       <span class="kw">aes</span>(<span class="dt">x =</span> x, </a>
-<a class="sourceLine" id="cb137-3" title="3">           <span class="dt">y =</span> y, </a>
-<a class="sourceLine" id="cb137-4" title="4">           <span class="dt">fill =</span> layer)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb137-5" title="5"><span class="st">  </span><span class="kw">geom_raster</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb137-6" title="6"><span class="st">  </span><span class="kw">scale_fill_viridis</span>(<span class="dt">option =</span> <span class="st">&quot;A&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb137-7" title="7"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Longitude&quot;</span>, </a>
-<a class="sourceLine" id="cb137-8" title="8">       <span class="dt">y =</span> <span class="st">&quot;Latitude&quot;</span>, </a>
-<a class="sourceLine" id="cb137-9" title="9">       <span class="dt">fill =</span> <span class="st">&quot;Temperature&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb137-10" title="10"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">4326</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb137-11" title="11"><span class="st">  </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<a class="sourceLine" id="cb136-5" title="5"><span class="st">  </span><span class="kw">geom_raster</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb136-6" title="6"><span class="st">  </span><span class="kw">scale_fill_viridis</span>(<span class="dt">option =</span> <span class="st">&quot;A&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb136-7" title="7"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Longitude&quot;</span>, </a>
+<a class="sourceLine" id="cb136-8" title="8">       <span class="dt">y =</span> <span class="st">&quot;Latitude&quot;</span>, </a>
+<a class="sourceLine" id="cb136-9" title="9">       <span class="dt">fill =</span> <span class="st">&quot;Temperature&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb136-10" title="10"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">4326</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb136-11" title="11"><span class="st">  </span><span class="kw">theme_bw</span>()</a></code></pre></div>
 <p><img src="EE_Intro_Spatial_Workshop_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
 
 </div>

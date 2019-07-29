@@ -128,7 +128,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Intro to spatial analysis in R</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Header fo text on homepage</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Home page</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="vector-data.html"><a href="vector-data.html"><i class="fa fa-check"></i><b>3</b> Vector Data</a><ul>
 <li class="chapter" data-level="3.1" data-path="vector-data.html"><a href="vector-data.html#vector-data-and-features"><i class="fa fa-check"></i><b>3.1</b> Vector data and features</a></li>
@@ -274,7 +274,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="challenge-2-extract-rasters-to-polygons-how-to-summarize-more-complex-extractions." class="section level2">
 <h2><span class="header-section-number">5.2</span> Challenge 2: Extract rasters to polygons: how to summarize more complex extractions.</h2>
-<p>When you extract data to polygons, like the states of Australia, you havepotentially have a lot of different values within each state, so we have to decide what we want to do with these values</p>
+<p>When you extract data to polygons, like the states of Australia, you potentially have a lot of different values within each state, so we have to decide what we want to do with these values</p>
 <p>Note: if your vector data is not an sf-object, you might need to use <code>spTransform</code> instead of <code>st_transform</code> when reprojecting, because some packages only talk to a specific data format and can’t work with others.</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" title="1"><span class="kw">crs</span>(states)</a></code></pre></div>
 <pre><code>## [1] &quot;+proj=longlat +ellps=GRS80 +no_defs&quot;</code></pre>
