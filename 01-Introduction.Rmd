@@ -1,3 +1,6 @@
 # Introduction 
-Please refer to our powerpoint presentation at this link:
+
+Please refer to our powerpoint presentation for the introduction material.
+
+It can be found on the GitHub repository hosting this website [here](https://github.com/Doi90/EE_Intro_Spatial_Workshop/blob/master/RGIS_EE_intro_presi_RV.pptx)
 
