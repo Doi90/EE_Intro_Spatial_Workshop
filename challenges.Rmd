@@ -1,0 +1,85 @@
+---
+title: "Challenges"
+author: "Roozbeh Valavi"
+date: "23/07/2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+----------
+
+# Challenge one
+
+Load the `Australia_proj` and `koala` data and plot them on top of each other in `Mercator projection`.
+Note: check the spatial reference of the maps first!
+   
+Directory of the data:   
+`data/Australia/Australia_proj.shp`   
+`data/koala.csv`
+
+----------
+
+```{r}
+library(sf)
+
+states <- st_read("data/Australia/Australia_proj.shp")
+st_crs(states)
+
+# reading csv file
+koala <- read.csv("data/koala.csv")
+# convert to sf
+koala_sf <- st_as_sf(koala, coords = c("Longitude", "Latitude"), crs = 4326)
+
+st_crs(koala_sf)
+
+states_proj <- st_transform(states, crs = 4326)
+
+plot(states_proj$geometry)
+plot(koala_sf$geometry, add = TRUE)
+
+```
+
+
+
+----------
+
+# Challenge two
+
+Load the city maps and calculate the nearest straight distance to the coastline of the cities with 0.5 m population and plot the distance.
+
+----------
+
+```{r}
+library(sf)
+library(maps)
+library(tidyverse)
+
+# load city data
+data(world.cities)
+
+
+cities <- st_as_sf(world.cities, coords = c("long", "lat"), crs = 4326) %>% 
+  filter(country.etc == "Australia") %>% 
+  filter(pop > 1e6)
+
+australia <- st_read("data/Australia/Australia_proj.shp") %>% 
+  st_union() %>% 
+  st_transform(crs = 4326)
+
+aus_line <- st_cast(australia, "MULTILINESTRING")
+
+cities$coast <- as.numeric(st_distance(cities, aus_line))
+
+plot(st_geometry(australia))
+plot(cities["coast"], add = TRUE)
+
+```
