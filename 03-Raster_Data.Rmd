@@ -1,12 +1,10 @@
 # Raster Data
 
-# Rasters and raster analysis
+## Rasters and raster analysis
 
-In this part, you learn what a raster is, and how to read, plot and manipulate such data
-
+In this section you learn what a raster is, and how to read, plot, and manipulate such data.
 
 First install the required packages
-
 
 ```{r, message = FALSE, warning = FALSE}
 library(rgdal)
@@ -17,105 +15,124 @@ library(maps)  # for making a scale bar
 library(rgeos) # for labels on polygons
 ```
 
-now set the working directory to your own computer
+Now set the working directory to your own computer (or better yet be using an R project!).
 
-```{r}
+```{r eval = FALSE}
 setwd("/Users/juttabeher/Documents/phd_melbourne/workshops/EE_Intro_Spatial_Workshop")
 ```
 
+## Understanding what a raster is
 
-# Understanding what a raster is
+What is a raster? Nothing more than a matrix! The command `raster()` turns any matrix into a raster-object that can be used for spatial analysis. You will now create your own raster:
 
-What is a raster? Nothing more than a matrix!
-The command "raster()" turns any matrix into a raster-object that can be used for
-spatial analysis
-You will now create your own raster:
-Create an empty matrix with the required dimensions
+Create an empty matrix with the required dimensions:
+
 ```{r}
-r <- matrix(0, nrow=3, ncol=3)
+r <- matrix(0, 
+            nrow = 3, 
+            ncol = 3)
+
+r
 ```
 
-Populate each row of the matrix with information (the values of the cells)
-and use the "raster()" command to turn it into a raster object, which you can plot
+Populate each row of the matrix with information (the values of the cells) and use the `raster()` command to turn it into a raster object, which you can plot.
+
 ```{r}
-r[,1] <- c(1,2,3)  
-r[,2] <- c(5,6,7)
-r[,3] <- c(8:10)
+r[ , 1] <- c(1, 2, 3)  
+r[ , 2] <- c(5, 6, 7)
+r[ , 3] <- c(8:10)
+
 rr <- raster(r)
+
 r
+
 plot(rr)
 ```
 
-As you can see, every cell has a color according to its value.
-You will find out later how to select specific colors.
+As you can see, every cell has a color according to its value. You will find out later how to select specific colors.
 
-# You can do any maths with a raster!
+## You can do any maths with a raster!
 
 ```{r}
 plot(rr * 2)
-plot(rr*100)
+
+plot(rr * 100)
+
 plot(rr + rr)
-plot(rr-rr)
+
+plot(rr - rr)
 ```
 
-# Optional task: 
+### Optional task: 
+
 Create a second raster with different numbers, add both rasters up and plot the result.
 Did the colors change?
 
-# Investigate rasters
+## Investigate rasters
 
-You can also use these commands to investigate different aspects of the data
+You can also use these commands to investigate different aspects of the data:
+
 ```{r}
-# you can use these commands to check for specific attributes of the raster:
 res(rr) # returns the cell size dimensions (an x and y value)
+
 ncol(rr) # the number of columns
+
 nrow(rr) # the number of rows
+
 ncell(rr) # the number of cells (rows * columns)
+
 dim(rr) # the dimensions of the raster (number of columns, number of rows, number of bands)
+
 crs(rr) # the projection of the raster, if it has one
+
 xmin(rr) # the x and y minimum and maximum coordinates, if there are any
+
 ymin(rr) 
+
 xmax(rr) 
+
 ymax(rr)
-range(values(rr), na.rm=TRUE) # the range of raster values, ignoring NoData
-cellStats(rr, mean) # the mean, min, max, sd, sum
+
+range(values(rr),   # the range of raster values, ignoring NoData
+      na.rm = TRUE) 
+
+cellStats(rr,    # the mean, min, max, sd, sum
+          mean) 
+
 freq(rr) # for categorical rasters, the frequency of values
 ```
 
-
-# Reading a raster into R
+## Reading a raster into R
 
 Now we use a raster version of the outline of Australia to extract data from the 
 worldclim dataset, and create one layer for mean annual temperature, and mean annual
-rainfall 
+rainfall. 
 
-The raster command is used to read in single data 
+The `raster()` command is used to read in single data objects:
+
 ```{r}
 au <- raster("data/australia.tif")
 
 plot(au) 
 ```
 
-Investigate the raster: how many cells does it have? how many rows and columns?
-Can you calculate how large one cells is?
+Investigate the raster: how many cells does it have? How many rows and columns? Can you calculate how large one cell is?
 
-Now we use this raster version of the outline of Australia to extract data from the 
-worldclim dataset, and create one layer for mean annual temperature, and mean annual
-rainfall 
+## Reading a list of rasters into R
 
-# Reading a list of rasters into R
+As useful as single data files are, often you have to read in a lot of files at the same time, for example when working with time series such as climate data that often come in files for single months, days or years and you need to combine or summarise them for your analysis. Instead of reading in every single file individually, you can create `stacks`.
 
-As useful as single data files are, often you have to read in a lot of files at the same time, for example when working with timeseries such as climate data that often come in files for single months, days or years and you need to combine or summarise them for your analysis.
-Instead of reading in every single file individually, you can create "stacks".
-
-This is particularly useful if you intend to combine them, for example by calculating the annual mean from 12 monthly means.
-To do so, you can create a list from all files in a directory to read in at once, and then create a "stack" of raster, like a thick sandwich.
-
+This is particularly useful if you intend to combine them, for example by calculating the annual mean from 12 monthly means. To do so, you can create a list from all files in a directory to read in at once, and then create a `stack` of rasters, like a thick sandwich.
 
 ```{r}
-rasterlist_t <- list.files("data/wc_tavg", pattern = ".tif$", full.names = TRUE)
-rasterlist_t # just a list
+rasterlist_t <- list.files("data/wc_tavg", 
+                           pattern = ".tif$", 
+                           full.names = TRUE)
+
+head(rasterlist_t) # just a list
+
 t_stack <- stack(rasterlist_t)
+
 plot(t_stack) # you should see that there are 12 rasters
 ```
 
@@ -123,135 +140,156 @@ Now do the same for the rainfall data!
 
 ```{r}
 #don't show code 
-rasterlist_p <- list.files("data/wc_prec", pattern = ".tif$", full.names = TRUE)
+rasterlist_p <- list.files("data/wc_prec", 
+                           pattern = ".tif$", 
+                           full.names = TRUE)
 p_stack <- stack(rasterlist_p)
 ```
 
-# Challenge One: Operations on rasterstacks
+## Challenge One: Operations on raster stacks
 
-Now you can use any command you want ONCE on this big sandwich of rasters 
-instead of having to use it 12 times on the single files.
-You can also line up several commands the you want to execute one after the other, what saves you from generating a lot of intermediate files.
-The %>% (pipe command) works like that: after the first command is executed, 
-the output gets used for the second command without assigning it to variable and storing it in memory.
-For example, clipping a raster is a two step process. First, the raster gets cropped to the rectangular extent of the data file used for the clipping (crop function), and then all the cells that have no values in the data file WITHIN the square extent that is used for the clipping are set to NoData (mask function). You can check out if you can see the difference in the output if you don't use the mask command, there are some parts around the coastline of Australia that will have data without the mask. Can you find them?
+Now you can use any command you want ONCE on this big sandwich of rasters instead of having to use it 12 times on the single files. You can also line up several commands the you want to execute one after the other, which saves you from generating a lot of intermediary files. The `%>%` (pipe command) works like that: after the first command is executed, the output gets used for the second command without assigning it to variable and storing it in memory.
+
+For example, clipping a raster is a two step process. First, the raster gets cropped to the rectangular extent of the data file used for the clipping (crop function), and then all the cells that have no values in the data file *WITHIN* the square extent that is used for the clipping are set to NoData (mask function). You can check out if you can see the difference in the output if you don't use the mask command, there are some parts around the coastline of Australia that will have data without the mask. Can you find them?
 
 A single step operation would be like this:
 
 ```{r}
-t_stack_crop <- crop(t_stack, au) 
-t_stack_crop_mask <- mask(t_stack_crop, au)
+t_stack_crop <- crop(t_stack, 
+                     au) 
+
+t_stack_crop_mask <- mask(t_stack_crop, 
+                          au)
+
 plot(t_stack_crop_mask)
 ```
 
 You can speed things up with a pipe:
 
-
-```{r}
-t_stack_crop <- crop(t_stack, au) 
-t_stack_crop_mask <- mask(t_stack_crop, au)
-plot(t_stack_crop_mask)
-```
-
-And the faster version with a pipe:
-
 ```{r}
 t_stack_au <- crop(t_stack, au) %>% 
   mask(au)
+
 p_stack_au <- crop(p_stack, au) %>% 
   mask(au)
+
 plot(p_stack_au)
 ```
-
 
 Now you can calculate the mean from your cropped and masked stack:
 
 ```{r}
-# don't show code)
 pmean <- mean(p_stack_au)
+
 tmean <- mean(t_stack_au)
 ```
 
-You can use the plot() command to check how your output looks
-or get a summary by executing the name of your new raster
+You can use the `plot()` command to check how your output looks or get a summary by executing the name of your new raster.
 
 ```{r}
-# don't show code
 plot(tmean)
-plot(pmean)
 
+plot(pmean)
 ```
 
 Well done, you have mastered single rasters, raster stacks and creating new information from your data!
 
 Keep in mind: the data from worldclim is of high quality, and all rasters are already in the same projection and resolution, so you can skip any exploration and preparation of the data. If your data comes from different sources, or you are not sure about the quality, always spend some time with exploration, cleaning and preparing, like omitting obvious wrong points like koalas that are not on land, or investigating NA values (what value is used for NAs (some raster data uses for example -999 or very small values), where are these NAs located, and how might this impact your analysis). 
 
-# Writing new rasters to file
+## Writing new rasters to file
+
 You can write your new data to file if you want.
 
 ```{r}
-writeRaster(tmean, "tmean.tif", format="GTiff", overwrite = TRUE)
+writeRaster(tmean, 
+            filename = "tmean.tif", 
+            format = "GTiff", 
+            overwrite = TRUE)
 ```
 
-# Challenge 2: creating categories from summarizing and combining data
+## Challenge 2: Creating categories from summarizing and combining data
 
 In many cases, continuous data is what you want, but sometimes categories are more useful to get a broader overview, or with known thresholds or ranges. Some species for example only occur above a certain temperature, or in a particular elevation. Here you learn how to make categories from combining multiple continuous datasets:
-You want to make categories for the temperature and the rainfall to get a better overview of distinct combinations. For this exercise, create 4 categories for temperature: cold, cool,warm, hot
-and 2 for rainfall: dry and wet
-Tip: use the cellStats(x, stats) command to find out the quantiles as boundaries
-for temperature and min,mean,max as boundaries for the rainfall. Of course, the breakpoints that you choose will drive the quality of your results, and to derive at the values at which you want to distinguish categories might need a lot of research or knowledge. You could probably question if the words cold, cool, warm and hot fit to the quantiles. Feel free to try other breakpoints that you find more appropriate.
 
-# Preparation for the reclassification into categories:
-Maybe you can remember how we created our first raster in the beginning - you will now create such a raster to use for reclassification. It has to show the start and endpoints for your categories (that you found out with cellStats() or based on more meaningful ecological knowledge), as well as the numbers you want to use as category-names:
+You want to make categories for the temperature and the rainfall to get a better overview of distinct combinations. For this exercise, create four categories for temperature (cold, cool,warm, hot) and two for rainfall (dry and wet).
+
+Tip: use the `cellStats(x, stats)` command to find out the quantiles as boundaries for temperature and `min`, `mean`, `max` as boundaries for the rainfall. Of course, the breakpoints that you choose will drive the quality of your results, and to derive at the values at which you want to distinguish categories might need a lot of research or knowledge. You could probably question if the words cold, cool, warm and hot fit to the quantiles. Feel free to try other breakpoints that you find more appropriate.
+
+## Preparation for the reclassification into categories:
+
+Maybe you can remember how we created our first raster in the beginning - you will now create such a raster to use for reclassification. It has to show the start and endpoints for your categories (that you found out with `cellStats()` or based on more meaningful ecological knowledge), as well as the numbers you want to use as category-names:
 
 ```{r}
-tcat <- matrix(0, nrow=4, ncol=3)
+tcat <- matrix(0, 
+               nrow = 4, 
+               ncol = 3)
+
 # populate each row of the matrix with reclassification information for temperature
-tcat[,1] <- c(4,19,22,25) # fill in here the start of the categories 
-tcat[,2] <- c(19,22,25,30) # fill in here the endpoint of the categories
-tcat[,3] <- c(1:4) # fill in here the number for the categories (1-4)
 
+tcat[ , 1] <- c(4, 19, 22, 25) # fill in here the start of the categories 
+tcat[ , 2] <- c(19, 22, 25, 30) # fill in here the endpoint of the categories
+tcat[ , 3] <- c(1:4) # fill in here the number for the categories (1-4)
 
-pcat <- matrix(0, nrow=2, ncol=3)
+pcat <- matrix(0, 
+               nrow = 2, 
+               ncol = 3)
+
 # populate each row of the matrix with reclassification information for precipitation
-pcat[,1] <- c(6,40) 
-pcat[,2] <- c(40,380)
-pcat[,3] <- c(1:2)
+
+pcat[ , 1] <- c(6, 40) 
+pcat[ , 2] <- c(40, 380)
+pcat[ , 3] <- c(1:2)
 ```
 
+## Reclassification
 
-# Reclassification
-Now you can use the matrix for reclassification.
-Reclassification means, that a raster will get overwritten with new values in all cells, based on bins of values. You just created these bins with your matrix. For example, all cells between 4 and 19 degrees will get assigned to category 1 in the new raster.
+Now you can use the matrix for reclassification. Reclassification means that a raster will get overwritten with new values in all cells, based on bins of values. You just created these bins with your matrix. For example, all cells between 4 and 19 degrees will get assigned to category 1 in the new raster.
+
 ```{r}
-tcat_au <- reclassify(tmean, tcat, right=FALSE, overwrite = TRUE)
-# do the same for precipitation
-# don't show code
-pcat_au <- reclassify(pmean, pcat, right=FALSE, overwrite = TRUE)
+tcat_au <- reclassify(tmean, 
+                      rcl = tcat, 
+                      right = FALSE, 
+                      overwrite = TRUE)
+
+pcat_au <- reclassify(pmean, 
+                      rcl = pcat, 
+                      right = FALSE, 
+                      overwrite = TRUE)
 
 # check out what you created
+
 plot(tcat_au)
+
 plot(pcat_au)
 ```
 
 Now you can combine the 2 rasters to get 8 categories for combinations of temperature and rainfall...
-Think about it: you want to make sure that you can still see both, the values that describe the rainfall (1 & 2), and the values that describe temperature (1-4).
-In order to be able to tell them apart, you can multiply one raster by 10 before combining them - that way you will get a combinatory value with 2 digits: one slot has a 1 or 2, and one slot a 1,2,3 or 4. What would happen if you just add both rasters up? 
-You can also define the colors you want for your categories. There are many websites that show colors and their names for R.
 
+Think about it: you want to make sure that you can still see both, the values that describe the rainfall (1 & 2), and the values that describe temperature (1-4). In order to be able to tell them apart, you can multiply one raster by 10 before combining them - that way you will get a combinatory value with 2 digits: one slot has a 1 or 2, and one slot a 1, 2, 3 or 4. What would happen if you just add both rasters up? 
+
+You can also define the colors you want for your categories. There are many websites that show colors and their names for `R`.
 
 ```{r}
-
 climate_au <- tcat_au + pcat_au * 10
 
 plot(climate_au)
 
 # you can select colors for your gradients
 # define the list of colour names (see Appendix for colour names)
-colors <- c("white", "yellow", "lightgreen","darkgreen", "lightblue", "blue", "purple","red")
-breaks <- c(10,11,12,13,14,21,22,23,24)
+colors <- c("white", 
+            "yellow", 
+            "lightgreen",
+            "darkgreen",
+            "lightblue",
+            "blue",
+            "purple",
+            "red")
+
+breaks <- c(10, 11, 12, 13, 14, 21, 22, 23, 24)
+
 # plot the raster
-plot(climate_au,breaks = breaks, col=colors)
 
+plot(climate_au,
+     breaks = breaks, 
+     col = colors)
 ```
-
