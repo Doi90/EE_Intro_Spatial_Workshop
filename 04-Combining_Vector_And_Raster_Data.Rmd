@@ -1,9 +1,144 @@
 # Combining Vector and Raster Data
 
-## Header 1
 
-Text
+For most spatial analysis you are interested in the relationship between several layers. Sometimes you need to combine only raster layers, sometimes raster and vector data, sometimes you only work in the vector world.
+Here are 3 examples of possible combinations, but of course there are many more (For example ESRI (the company behind ARC-GIS) have an extensive online help that explains many concepts and tools with text and pictures).
 
-## Header 2
+Now we want to find out 3 things:
+1) how many koalas are in which temperature zone? (vector (point) & raster)
+2) how are the temperature zones distributed across the states? (vector (polygon) & raster)
+3) how many koalas are in which state? (vector (point) and vector (polygon))
 
-Text
+To find out, we have to "intersect" the 2 different layers with each other, to find out how they relate with each other. This can be done with the command "extract()" from the raster package. In case you have not done so, read in the shapefile of the Australian states. 
+
+Data: you will need to have worked through the raster part in order to have the raster with the climate categories. Of course you can try the exercise with any other raster data you are interested in. Feel free to download other species or climate information from online repositories like ALA, OBIS, or worldclim.
+
+```{r}
+
+states <- st_read("data/AU_states.shp")
+states1 <- readOGR("data/AU_states.shp") # this is an alternative to read in vector data, some other commands do not work with st objects (see mapping challenge)
+as(states, "Spatial")
+plot(states["STATE"])
+states1 <- readOGR("data/AU_states.shp") # this is an alternative to read in vector data, some other commands do not work with st objects (see mapping challenge)
+
+```
+
+# Challenge 1: Which climate do koalas like?
+
+When we extract data to points, each point will fall within one cell, so we
+don't have to worry about summarizing data. If you have not done so yet, read in the koala data again.
+You also want to check if they are in the same coordinate reference system before you do you analysis.
+
+
+```{r}
+# reading csv file
+koala <- read.csv("data/koala.csv")
+# convert to sf
+koala_sf <- st_as_sf(koala, coords = c("Longitude", "Latitude"), crs = 4326)
+crs(koala_sf)  
+crs(climate_au) # although this one is slightly longer, they are actually the same. Check out for example the EPSG website, or spatialreference.org to find out more
+st_crs(koala_sf) <- crs(climate_au) # if they are the same, but spelled differently, or one is not defined, you can assign the crs of one layer to the other. 
+koala_climate <- raster::extract(climate_au, koala_sf, na.rm=TRUE) 
+
+```
+
+Note: sometimes, the name of a function exists in more than one package. Here, the function extract() also exists in the tidyverse. In order to tell R which one you want to use, you can specify with package::function(). You can try out what happens when you just try to use extract().
+
+Check your results: Are there NA values? Why do you think there are NA values?
+
+Which climate do koalas like? Often, a simple plot is more informative than a map.
+
+```{r}
+hist(koala_climate)
+```
+
+# Challenge 2: Extract rasters to polygons: how to summarize more complex extractions
+When you extract data to polygons, like the states of Australia, you have potentially a lot of different values within each state, so we have to decide what we want to do with these values
+Note: if your vector data is not an sf-object, you might need to use spTransform instead of st_transform when reprojecting, because some packages only talk to a specific data format and can't work with others.
+
+```{r}
+crs(states)
+crs(climate_au)
+states_pr <- st_transform(states, crs(climate_au))
+state_climate <- raster::extract(climate_au, states_pr, factors = TRUE, df=TRUE, na.rm=TRUE) # Note: extract() exists in tidyverse AND raster, so you have to specify which one you want to use
+```
+
+Now we want to sum up all cells within each state for each category
+
+```{r}
+class.counts <- as.data.frame(table(state_climate$ID,state_climate$layer))
+```
+
+How does your output look like if you don't use the "as.data.frame" command? Why do you think it is more useful as a data.frame? How would it be even more useful?
+
+
+# Attach the new information to your shapefile
+To be able to use your new information in a map, we join our results onto our shapefile as new columns.
+This is slightly more advanced, so don't worry if you don't get this bit quite yet.
+Table() gives you a summary overview for 2 parameters, but it is not accessible like other forms (like dataframe or matrix) in R, so it might be a bit tricky to attach it directly to an existing table. By transforming the results from table() into another format, you make your life easier. When you want to join columns to an existing table and want to make sure that you don't mess up the order, you can use a shared column for matching lines up with each other. So a bit of preparation is needed to get the results from table() ready for a join to the spatial data:
+
+```{r}
+class.counts <- table(state_climate$ID,state_climate$layer) %>% 
+  as.matrix.data.frame() %>% 
+  as.data.frame() %>% 
+  setNames(paste0("class_", c(11,12,13,14,21,22,23,24)))
+
+class.counts$OBJECTID <- as.numeric(rownames(class.counts)) # 1:8 not recommended
+
+states_pr <- left_join(states_pr, class.counts, by = "OBJECTID")
+
+```
+
+Now we can create maps that show the cellcount of the different climate categories in each state. You can plot single maps, or a combination
+
+```{r}
+plot(states_pr["class_14"])
+plot(states_pr[19:22])
+```
+
+# Attach the new information to your shapefile
+To be able to plot this, we join our results onto our shapefile as new columns
+This is slightly more advanced, so don't worry if you don't get this bit quite yet
+```{r}
+class.counts <- table(state_climate$ID,state_climate$layer) %>% 
+  as.matrix.data.frame() %>% 
+  as.data.frame() %>% 
+  setNames(paste0("class_", c(11,12,13,14,21,22,23,24)))
+
+# Challenge 3: Count points in polygons
+class.counts$OBJECTID <- as.numeric(rownames(class.counts)) # 1:8 not recommended
+
+states_pr <- left_join(states_pr, class.counts, by = "OBJECTID")
+
+```
+
+Now we can create maps that show the cellcount of the different climate categories in each state. You can plot single maps, or a combination
+
+```{r}
+plot(states_pr["class_14"])
+plot(states_pr[19:22])
+```
+
+
+# Count points in polygons
+(This is more or less what you already did in the vector part and just here for repetition)
+We can also count how many Koalas are in each state, and attach the information in the attribute table of the states:
+
+```{r}
+state_koala <- st_intersection(koala_sf, states_pr) 
+state.counts <- as.data.frame(table(state_koala$STATENAME,state_koala$Species))
+states_pr$koala_count <- state.counts$Freq
+
+print(state.counts)
+
+```
+
+If you don't always work with package sf, and you still want to be really sure that things that you calculated will get filled in the right columns and rows, you can always do a merge:
+
+```{r}
+states2 <- merge(states1, state.counts, by.x = "STATENAME", by.y = "Var1",
+                             sort = TRUE)
+head(states2@data)
+```
+
+Of course there are many more ways to analyse raster and vector data, this was just a first taste of common operations. Don't forget: there are usually many different ways (including different packages and commands) to get to the same result. Public forums like stackoverflow offer a way to find alternative ways and also post specific questions when you get stuck. Don't be shy! It is usually also a good idea to run some tests on a small dataset or subset where you can check manually that you get the result that you want and all numbers make sense. 
